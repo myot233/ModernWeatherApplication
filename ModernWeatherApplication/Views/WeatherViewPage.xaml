@@ -1,0 +1,21 @@
+﻿<Page x:Class="ModernWeatherApplication.Views.WeatherViewPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:local="clr-namespace:ModernWeatherApplication.Views" xmlns:modernweatherapplication="clr-namespace:ModernWeatherApplication"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        d:DataContext="{d:DesignInstance  local:WeatherViewPage }"
+      xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF" xmlns:viewmodel="clr-namespace:ModernWeatherApplication.ViewModel"
+      xmlns:painting="clr-namespace:LiveChartsCore.SkiaSharpView.Painting;assembly=LiveChartsCore.SkiaSharpView"
+      xmlns:controls="clr-namespace:ModernWeatherApplication.Controls"
+      ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+      ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+      Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+      mc:Ignorable="d" 
+      Title="WeatherViewPage">
+    
+            <controls:WeatherControl MaxTemp="25" MinTemp="15" >
+            
+        </controls:WeatherControl>
+</Page>

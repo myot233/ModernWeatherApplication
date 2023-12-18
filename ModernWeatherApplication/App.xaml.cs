@@ -6,11 +6,15 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ModernWeatherApplication.Service;
 using ModernWeatherApplication.Views;
 using System.IO;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Threading;
+using ModernWeatherApplication.ViewModel;
+using Wpf.Ui.Contracts;
+using Wpf.Ui.Services;
 
 namespace ModernWeatherApplication
 {
@@ -30,8 +34,12 @@ namespace ModernWeatherApplication
             .ConfigureServices((context, services) =>
             {
                 services.AddSingleton<FluentMainWindow>();
-                services.AddSingleton<MainViewModel>();
+                services.AddSingleton<ViewModel.MainViewModel>();
                 services.AddHostedService<HostService>();
+                services.AddSingleton<WeatherViewModel>();
+                services.AddSingleton<WeatherViewPage>();                
+                services.AddSingleton<INavigationService,NavigationService>();
+                services.AddSingleton<ApiService>();
             }).Build();
 
         /// <summary>

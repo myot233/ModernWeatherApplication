@@ -1,0 +1,34 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:local ="clr-namespace:ModernWeatherApplication.Controls"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    <Style TargetType="local:WeatherControl">
+                        <Setter Property="Focusable" Value="False" />
+                        <Setter Property="SnapsToDevicePixels" Value="True" />
+                        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="local:WeatherControl">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="1*"></RowDefinition>
+                                            <RowDefinition  Height="3*"></RowDefinition>
+                                            <RowDefinition  Height="3*"></RowDefinition>
+                                            <RowDefinition  Height="1*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Row="0" Text="{TemplateBinding MaxTemp}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                                        <Image Grid.Row="1" Source="{TemplateBinding MaxImage}"></Image>
+                                        <Image Grid.Row="2" Source="{TemplateBinding MinImage}"></Image>
+                                        <TextBlock Grid.Row="3" Text="{TemplateBinding MinTemp}"></TextBlock>
+                                    </Grid>
+                                    
+                                </ControlTemplate>
+                            </Setter.Value>
+
+
+                        </Setter>
+
+
+
+
+                    </Style>
+</ResourceDictionary>

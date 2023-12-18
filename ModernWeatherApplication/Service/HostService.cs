@@ -6,17 +6,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModernWeatherApplication
+namespace ModernWeatherApplication.Service
 {
     public class HostService : IHostedService
     {
-        private FluentMainWindow _window { get; set; }
-        public HostService(FluentMainWindow window) {
+        private FluentMainWindow _window { get; }
+        public HostService(FluentMainWindow window)
+        {
             _window = window;
         }
         public Task StartAsync(CancellationToken cancellationToken)
         {
-         
+
             _window.Show();
             return Task.CompletedTask;
         }

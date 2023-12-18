@@ -9,9 +9,10 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ui:ThemesDictionary Theme="Light" />
-                <ui:ControlsDictionary />
+                <ui:ThemesDictionary Theme= "Light"/><ui:ControlsDictionary />
+                <ResourceDictionary Source="Controls/WeatherControl.xaml"></ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>
