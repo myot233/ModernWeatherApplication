@@ -13,19 +13,12 @@ namespace ModernWeatherApplication.Views
     {
         public WeatherViewModel ViewModel { get; }
 
-        public Paint Paint { get;  } = 
-            new SolidColorPaint
-        {
-            Color = SKColors.DarkSlateGray,
-            SKTypeface = SKFontManager.Default.MatchCharacter('汉')
-        };
+        
 
 
         public WeatherViewPage(WeatherViewModel viewModel)
         {
-            
             ViewModel = viewModel;
-            viewModel.LabelPaint = Paint;
             DataContext = this;
             InitializeComponent();
             

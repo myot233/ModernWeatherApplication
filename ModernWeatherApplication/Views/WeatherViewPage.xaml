@@ -4,18 +4,36 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:local="clr-namespace:ModernWeatherApplication.Views" xmlns:modernweatherapplication="clr-namespace:ModernWeatherApplication"
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         d:DataContext="{d:DesignInstance  local:WeatherViewPage }"
       xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF" xmlns:viewmodel="clr-namespace:ModernWeatherApplication.ViewModel"
       xmlns:painting="clr-namespace:LiveChartsCore.SkiaSharpView.Painting;assembly=LiveChartsCore.SkiaSharpView"
       xmlns:controls="clr-namespace:ModernWeatherApplication.Controls"
+      xmlns:service="clr-namespace:ModernWeatherApplication.Service"
+      xmlns:model="clr-namespace:ModernWeatherApplication.Model"
       ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
       ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       mc:Ignorable="d" 
       Title="WeatherViewPage">
-    
-            <controls:WeatherControl MaxTemp="25" MinTemp="15" >
-            
-        </controls:WeatherControl>
+        <ListView ItemsSource="{Binding ViewModel.Items,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+        <ListView.ItemsPanel>
+            <ItemsPanelTemplate>
+                <WrapPanel/>
+            </ItemsPanelTemplate>
+        </ListView.ItemsPanel>
+        <ListView.ItemTemplate>
+            <DataTemplate DataType="{x:Type model:WeatherModel}">
+                <WrapPanel Orientation="Horizontal">
+                    <StackPanel>
+                        <TextBlock Text="{Binding Date }" HorizontalAlignment="Center"></TextBlock>
+                        <svgc:SvgViewbox Source="{Binding Image}" MaxWidth="50" MaxHeight="50" Margin="15,15"></svgc:SvgViewbox>
+                        <TextBlock Text="{Binding MaxTemp}" HorizontalAlignment="Center"></TextBlock>
+                        <TextBlock Text="{Binding MinTemp}" HorizontalAlignment="Center" Margin="0,10,0,0"></TextBlock>
+                    </StackPanel>
+                </WrapPanel>
+            </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
 </Page>

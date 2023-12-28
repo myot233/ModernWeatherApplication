@@ -63,9 +63,19 @@ namespace ModernWeatherApplication.Properties {
         /// <summary>
         ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
-        internal static byte[] sunny_day {
+        internal static byte[] cloudy {
             get {
-                object obj = ResourceManager.GetObject("sunny day", resourceCulture);
+                object obj = ResourceManager.GetObject("cloudy", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Byte[] 类型的本地化资源。
+        /// </summary>
+        internal static byte[] sunny {
+            get {
+                object obj = ResourceManager.GetObject("sunny", resourceCulture);
                 return ((byte[])(obj));
             }
         }

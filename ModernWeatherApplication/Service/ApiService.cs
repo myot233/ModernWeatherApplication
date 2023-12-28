@@ -21,7 +21,7 @@ namespace ModernWeatherApplication.Service
         private const string key = "9604612732b54b618f4c6f82e5b598db";
         private const string lang = "zh-hans";
         private const string unit = "m";
-        HttpClientHandler handler = new HttpClientHandler()
+        HttpClientHandler handler = new()
         {
             AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
         };
