@@ -22,10 +22,13 @@ public partial class WeatherViewModel : ObservableObject,INavigationAware
     [ObservableProperty]
     private ObservableCollection<WeatherModel> _items = new();
 
+    [ObservableProperty] 
+    private WeatherModel _selected;
+
     public WeatherViewModel(ApiService service)
     {
        var t =  InitItem(service);
-
+        
 
     }
 
@@ -34,7 +37,8 @@ public partial class WeatherViewModel : ObservableObject,INavigationAware
         
         var lst = await service.FetchWeatherData(101210106);
         lst.ForEach((x) => { Items.Add(new WeatherModel(x)); });
-        
+        Selected = Items[0];
+
     }
 
     

@@ -31,15 +31,13 @@ namespace ModernWeatherApplication.Service
             var client = new HttpClient(handler);
             var result = await client.GetAsync($"{url}?location={location}&key={key}&lang={lang}&unit={unit}");
             var jobj = JObject.Parse(await result.Content.ReadAsStringAsync());
-            if (jobj["code"].Value<int>() != 200)
+            if ((jobj["code"] ?? throw new InvalidOperationException("error code")).Value<int>() != 200)
             {
                 throw new InvalidOperationException($"operation failed {jobj}");
             }
 
-            return jobj["daily"].Children().ToList().Select((x) =>
-            {
-                return x.ToObject<WeatherData>()!;
-            }).ToList();
+            return jobj["daily"]!.Children().ToList().Select((x) => 
+                x.ToObject<WeatherData>()!).ToList();
 
 
         }

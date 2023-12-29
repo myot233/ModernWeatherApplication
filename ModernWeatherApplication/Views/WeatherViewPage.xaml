@@ -17,23 +17,66 @@
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       mc:Ignorable="d" 
       Title="WeatherViewPage">
-        <ListView ItemsSource="{Binding ViewModel.Items,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-        <ListView.ItemsPanel>
-            <ItemsPanelTemplate>
-                <WrapPanel/>
-            </ItemsPanelTemplate>
-        </ListView.ItemsPanel>
-        <ListView.ItemTemplate>
-            <DataTemplate DataType="{x:Type model:WeatherModel}">
-                <WrapPanel Orientation="Horizontal">
-                    <StackPanel>
-                        <TextBlock Text="{Binding Date }" HorizontalAlignment="Center"></TextBlock>
-                        <svgc:SvgViewbox Source="{Binding Image}" MaxWidth="50" MaxHeight="50" Margin="15,15"></svgc:SvgViewbox>
-                        <TextBlock Text="{Binding MaxTemp}" HorizontalAlignment="Center"></TextBlock>
-                        <TextBlock Text="{Binding MinTemp}" HorizontalAlignment="Center" Margin="0,10,0,0"></TextBlock>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="TextAlignment" Value="Center"></Setter>
+                        <Setter Property="Margin" Value="5,10"></Setter>
+                    </Style>
+                </Grid.Resources>
+                <StackPanel Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock FontSize="45" Text="{Binding ViewModel.Selected.MaxTemp}"></TextBlock>
+                    <TextBlock FontSize="25" Text="{Binding ViewModel.Selected.MinTemp}"></TextBlock>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="风速:"></TextBlock>
+                        <TextBlock Text="{Binding ViewModel.Selected.WindSpeedDay}"></TextBlock>
                     </StackPanel>
-                </WrapPanel>
-            </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="风向:"></TextBlock>
+                        <TextBlock Text="{Binding ViewModel.Selected.WindDirectionDay}"></TextBlock>
+                    </StackPanel>
+                </StackPanel>
+                <svgc:SvgViewbox Grid.Column="1" Source="{Binding ViewModel.Selected.Image}" Width="100"></svgc:SvgViewbox>
+
+            </Grid>
+        </Grid>
+            <ListView Grid.Row="1" 
+                      ItemsSource="{Binding ViewModel.Items}" 
+                      SelectedItem="{Binding ViewModel.Selected}"
+                      SelectionMode="Single"
+                      >
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemTemplate>
+                    <DataTemplate DataType="{x:Type model:WeatherModel}">
+                        <WrapPanel Orientation="Horizontal">
+                            <StackPanel>
+                                <TextBlock Text="{Binding Date }" HorizontalAlignment="Center"></TextBlock>
+                                <svgc:SvgViewbox Source="{Binding Image}" Width="70" Height="70" Margin="45,15"></svgc:SvgViewbox>
+                                <TextBlock Text="{Binding MaxTemp}" HorizontalAlignment="Center"></TextBlock>
+                                <TextBlock Text="{Binding MinTemp}" HorizontalAlignment="Center" Margin="0,10,0,0"></TextBlock>
+                            </StackPanel>
+                        </WrapPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+    </Grid>
 </Page>

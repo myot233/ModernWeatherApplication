@@ -8,7 +8,7 @@
         xmlns:viewModel="clr-namespace:ModernWeatherApplication.ViewModel"
         d:DataContext="{d:DesignInstance Type=local:FluentMainWindow}"
                  mc:Ignorable="d"
-        Title="Fluent" Height="450" Width="800">
+        Title="Fluent" Height="800" Width="1400">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
