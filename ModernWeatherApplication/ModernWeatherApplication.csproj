@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <TargetFramework>net6.0-windows7.0</TargetFramework>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>wpfui-icon.ico</ApplicationIcon>
@@ -30,6 +30,7 @@
     <None Remove="Assets\wpfui-icon-1024.png" />
     <None Remove="Resources\cloudy.svg" />
     <None Remove="Resources\overcast.svg" />
+    <None Remove="Resources\pm2.5.svg" />
     <None Remove="Resources\rain_small.svg" />
     <None Remove="Resources\shower.svg" />
     <None Remove="Resources\sunny.svg" />
@@ -43,6 +44,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\overcast.svg" />
+    <Resource Include="Resources\pm2.5.svg" />
     <Resource Include="Resources\rain_small.svg" />
     <Resource Include="Resources\shower.svg" />
     <Resource Include="Resources\sunny.svg">

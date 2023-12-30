@@ -17,29 +17,59 @@ namespace ModernWeatherApplication.Service
 
         }
 
-        private const string url = "https://devapi.qweather.com/v7/weather/7d";
-        private const string key = "9604612732b54b618f4c6f82e5b598db";
-        private const string lang = "zh-hans";
-        private const string unit = "m";
+        private const string SevenDayUrl = "https://devapi.qweather.com/v7/weather/7d";
+        private const string PerHourUrl = "https://devapi.qweather.com/v7/weather/24h";
+        private const string AirPollutionUrl = "https://devapi.qweather.com/v7/air/now";
+
+        private const string Key = "9604612732b54b618f4c6f82e5b598db";
+        private const string Lang = "zh-hans";
+        private const string Unit = "m";
+
         HttpClientHandler handler = new()
         {
             AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
         };
 
-        public async Task<List<WeatherData>> FetchWeatherData(int location)
+        public async Task<List<DayWeatherData>> FetchWeatherDataSevenDay(int location)
         {
             var client = new HttpClient(handler);
-            var result = await client.GetAsync($"{url}?location={location}&key={key}&lang={lang}&unit={unit}");
+            var result = await client.GetAsync($"{SevenDayUrl}?location={location}&key={Key}&lang={Lang}&unit={Unit}");
             var jobj = JObject.Parse(await result.Content.ReadAsStringAsync());
             if ((jobj["code"] ?? throw new InvalidOperationException("error code")).Value<int>() != 200)
             {
                 throw new InvalidOperationException($"operation failed {jobj}");
             }
 
-            return jobj["daily"]!.Children().ToList().Select((x) => 
-                x.ToObject<WeatherData>()!).ToList();
+            return jobj["daily"]!.Children().ToList().Select((x) =>
+                x.ToObject<DayWeatherData>()!).ToList();
+        }
 
 
+        public async Task<List<HourWeatherData>> FetchWeatherDataPerHour(int location)
+        {
+            var client = new HttpClient(handler);
+            var result = await client.GetAsync($"{PerHourUrl}?location={location}&key={Key}&lang={Lang}&unit={Unit}");
+            var jobj = JObject.Parse(await result.Content.ReadAsStringAsync());
+            if ((jobj["code"] ?? throw new InvalidOperationException("error code")).Value<int>() != 200)
+            {
+                throw new InvalidOperationException($"operation failed {jobj}");
+            }
+
+            return jobj["hourly"]!.Children().ToList().Select((x) =>
+                x.ToObject<HourWeatherData>()!).ToList();
+        }
+
+        public async Task<AirPollution> FetchAirPollutionNow(int location)
+        {
+            var client = new HttpClient(handler);
+            var result = await client.GetAsync($"{AirPollutionUrl}?location={location}&key={Key}&lang={Lang}");
+            var jobj = JObject.Parse(await result.Content.ReadAsStringAsync());
+            if ((jobj["code"] ?? throw new InvalidOperationException("error code")).Value<int>() != 200)
+            {
+                throw new InvalidOperationException($"operation failed {jobj}");
+            }
+
+            return jobj["now"]!.ToObject<AirPollution>()!;
         }
 
 
@@ -48,9 +78,41 @@ namespace ModernWeatherApplication.Service
 
     }
 
+    public class AirPollution
+    {
+        public string pubTime { get; set; }
+        public string aqi { get; set; }
+        public string level { get; set; }
+        public string category { get; set; }
+        public string primary { get; set; }
+        public string pm10 { get; set; }
+        public string pm2p5 { get; set; }
+        public string no2 { get; set; }
+        public string so2 { get; set; }
+        public string co { get; set; }
+        public string o3 { get; set; }
+    }
+
+    public class HourWeatherData
+    {
+        public string fxTime { get; set; }
+        public string temp { get; set; }
+        public string icon { get; set; }
+        public string text { get; set; }
+        public string wind360 { get; set; }
+        public string windDir { get; set; }
+        public string windScale { get; set; }
+        public string windSpeed { get; set; }
+        public string humidity { get; set; }
+        public string pop { get; set; }
+        public string precip { get; set; }
+        public string pressure { get; set; }
+        public string cloud { get; set; }
+        public string dew { get; set; }
+    }
 
 
-    public class WeatherData
+    public class DayWeatherData
     {
         /// <summary>
         /// 

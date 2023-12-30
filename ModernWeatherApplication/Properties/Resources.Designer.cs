@@ -79,5 +79,14 @@ namespace ModernWeatherApplication.Properties {
                 return ((byte[])(obj));
             }
         }
+        
+        /// <summary>
+        ///   查找类似 Init24HourItemis executed 的本地化字符串。
+        /// </summary>
+        internal static string WeatherViewModel_Init24HourItem_Init24HourItemis_executed {
+            get {
+                return ResourceManager.GetString("WeatherViewModel_Init24HourItem_Init24HourItemis_executed", resourceCulture);
+            }
+        }
     }
 }

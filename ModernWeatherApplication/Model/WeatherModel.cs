@@ -12,17 +12,17 @@ namespace ModernWeatherApplication.Model
 {
     public class WeatherModel
     {
-        private WeatherData _weatherData;
+        private DayWeatherData _dayWeatherData;
         public string Date
         {
             get
             {
-                var dateTime = DateTime.ParseExact(_weatherData.fxDate, "yyyy-MM-dd", null);
+                var dateTime = DateTime.ParseExact(_dayWeatherData.fxDate, "yyyy-MM-dd", null);
                 return $"{dateTime:ddddd} {dateTime:dd}";
             }
         }
 
-        public Uri Image => new(int.Parse(_weatherData.iconDay) switch
+        public Uri Image => new(int.Parse(_dayWeatherData.iconDay) switch
         {
 
             100 => "pack://application:,,,/Resources/sunny.svg",
@@ -35,18 +35,18 @@ namespace ModernWeatherApplication.Model
             _ => "pack://application:,,,/Resources/sunny.svg"
         });
 
-        public string MinTemp => _weatherData.tempMin + "℃";
+        public string MinTemp => _dayWeatherData.tempMin + "℃";
 
-        public string MaxTemp => _weatherData.tempMax + "℃";
+        public string MaxTemp => _dayWeatherData.tempMax + "℃";
 
-        public string WindSpeedDay => _weatherData.windSpeedDay + "公里/小时";
+        public string WindSpeedDay => _dayWeatherData.windSpeedDay + "公里/小时";
 
-        public string WindDirectionDay => _weatherData.windDirDay;
+        public string WindDirectionDay => _dayWeatherData.windDirDay;
 
-        public WeatherModel(WeatherData data)
+        public WeatherModel(DayWeatherData data)
         {
            
-            _weatherData = data;
+            _dayWeatherData = data;
         }
     }
 }
