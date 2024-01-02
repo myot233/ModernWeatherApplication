@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media;
+﻿using LiveChartsCore;
+using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.Painting;
 using ModernWeatherApplication.Service;
-using SharpVectors.Converters;
-using SharpVectors.Renderers;
+using SkiaSharp;
 
 namespace ModernWeatherApplication.Model
 {
@@ -35,13 +31,54 @@ namespace ModernWeatherApplication.Model
             _ => "pack://application:,,,/Resources/sunny.svg"
         });
 
-        public string MinTemp => _dayWeatherData.tempMin + "℃";
+        public string MinTemp => _dayWeatherData.tempMin + " ℃";
 
-        public string MaxTemp => _dayWeatherData.tempMax + "℃";
+        public string MaxTemp => _dayWeatherData.tempMax + " ℃";
 
-        public string WindSpeedDay => _dayWeatherData.windSpeedDay + "公里/小时";
+        public string WindSpeedDay => _dayWeatherData.windSpeedDay + " 公里/小时";
 
         public string WindDirectionDay => _dayWeatherData.windDirDay;
+
+        public string Pressure => _dayWeatherData.pressure + " 百帕";
+
+        public string Precip => _dayWeatherData.precip + " 毫米";
+
+        public string Vis => _dayWeatherData.vis + " 公里";
+
+        public string Humidity => _dayWeatherData.humidity + " %";
+
+        public string SunRise => _dayWeatherData.sunrise;
+        
+        public string SunSet => _dayWeatherData.sunset;
+        public IEnumerable<ISeries> Pie
+        {
+            get
+            {
+                var span = DateTime.ParseExact(_dayWeatherData.sunset, "HH:mm", null) -
+                           DateTime.ParseExact(_dayWeatherData.sunrise, "HH:mm", null);
+                return new[]
+                {
+                    new PieSeries<int>
+                    {
+                        Name = "日间",
+                        ToolTipLabelFormatter = (x) => _dayWeatherData.sunrise,
+                        Values = new[]{  span.Minutes + span.Hours * 60 },
+                        Fill = new SolidColorPaint(SKColors.LightYellow)
+                    },
+                    new PieSeries<int>
+                    {
+                        Name = "夜间",
+                        ToolTipLabelFormatter = (x) => _dayWeatherData.sunset,
+                        Values = new []{ 24 * 60 - (span.Minutes + span.Hours * 60) },
+                        Fill = new SolidColorPaint(SKColors.LightBlue)
+                    }
+                    
+                };
+                
+
+
+            }
+        }
 
         public WeatherModel(DayWeatherData data)
         {

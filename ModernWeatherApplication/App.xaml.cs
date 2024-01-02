@@ -39,7 +39,12 @@ namespace ModernWeatherApplication
                 services.AddSingleton<WeatherViewModel>();
                 services.AddSingleton<WeatherViewPage>();                
                 services.AddSingleton<INavigationService,NavigationService>();
+                services.AddSingleton<ISnackbarService, SnackbarService>();
+                services.AddSingleton<IContentDialogService, ContentDialogService>();
                 services.AddSingleton<ApiService>();
+                services.AddSingleton<SettingViewModel>();
+                services.AddSingleton<SettingViewPage>();
+                services.AddSingleton<LoggerService>();
             }).Build();
 
         /// <summary>

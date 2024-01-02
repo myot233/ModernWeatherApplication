@@ -10,10 +10,9 @@ namespace ModernWeatherApplication.Views
         public ViewModel.MainViewModel ViewModel { get; set; }
         public FluentMainWindow(
             ViewModel.MainViewModel viewModel, 
-            INavigationService navigationService
-            //IServiceProvider serviceProvider,
-            //ISnackbarService snackbarService,
-            //IContentDialogService contentDialogService
+            INavigationService navigationService,
+            ISnackbarService snackbarService,
+            IContentDialogService contentDialogService
             )
         {
             
@@ -21,6 +20,7 @@ namespace ModernWeatherApplication.Views
             DataContext = this;
             InitializeComponent();
             navigationService.SetNavigationControl(nav);
+            snackbarService.SetSnackbarPresenter(SnackbarPresenter);
         }
     }
 }

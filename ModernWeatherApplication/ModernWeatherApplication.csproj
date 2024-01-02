@@ -29,12 +29,20 @@
     <None Remove="Assets\wpfui-icon-256.png" />
     <None Remove="Assets\wpfui-icon-1024.png" />
     <None Remove="Resources\cloudy.svg" />
+    <None Remove="Resources\humandity.svg" />
     <None Remove="Resources\overcast.svg" />
     <None Remove="Resources\pm2.5.svg" />
+    <None Remove="Resources\pressure.svg" />
     <None Remove="Resources\rain_small.svg" />
     <None Remove="Resources\shower.svg" />
     <None Remove="Resources\sunny.svg" />
+    <None Remove="Resources\sunrise.svg" />
+    <None Remove="Resources\sunset.svg" />
     <None Remove="Resources\thunder_shower.svg" />
+    <None Remove="Resources\visibility.svg" />
+    <None Remove="Resources\wet.svg" />
+    <None Remove="Resources\wind_direction.svg" />
+    <None Remove="Resources\wind_speed.svg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -43,14 +51,22 @@
     <Resource Include="Resources\cloudy.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resources\humandity.svg" />
     <Resource Include="Resources\overcast.svg" />
     <Resource Include="Resources\pm2.5.svg" />
+    <Resource Include="Resources\pressure.svg" />
     <Resource Include="Resources\rain_small.svg" />
     <Resource Include="Resources\shower.svg" />
     <Resource Include="Resources\sunny.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resources\sunrise.svg" />
+    <Resource Include="Resources\sunset.svg" />
     <Resource Include="Resources\thunder_shower.svg" />
+    <Resource Include="Resources\visibility.svg" />
+    <Resource Include="Resources\wet.svg" />
+    <Resource Include="Resources\wind_direction.svg" />
+    <Resource Include="Resources\wind_speed.svg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -66,6 +82,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Model\" />
   </ItemGroup>
 
 </Project>

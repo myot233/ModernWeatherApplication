@@ -30,13 +30,23 @@
             x:Name="nav"
                            IsBackButtonVisible="Collapsed"
                            IsPaneToggleVisible="True">
+            <ui:NavigationView.ContentOverlay>
+                <Grid>
+                    <ui:SnackbarPresenter x:Name="SnackbarPresenter" />
+                </Grid>
+            </ui:NavigationView.ContentOverlay>
             <ui:NavigationView.MenuItems>
                 <ui:NavigationViewItem Content="天气情况" TargetPageType="{Binding ViewModel.WeatherPage}">
                     <ui:NavigationViewItem.Icon>
                         <ui:SymbolIcon Symbol="WeatherCloudy20"></ui:SymbolIcon>
                     </ui:NavigationViewItem.Icon>
                 </ui:NavigationViewItem>
-                <Separator></Separator>
+                <ui:NavigationViewItem Content="设置" TargetPageType="{Binding ViewModel.SettingPage}">
+                    <ui:NavigationViewItem.Icon>
+                        <ui:SymbolIcon Symbol="Settings32"></ui:SymbolIcon>
+                    </ui:NavigationViewItem.Icon>
+                </ui:NavigationViewItem>
+                
             </ui:NavigationView.MenuItems>
         </ui:NavigationView>
     </Grid>

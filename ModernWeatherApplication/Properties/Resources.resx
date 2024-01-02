@@ -121,10 +121,13 @@
   <data name="cloudy" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\cloudy.svg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="location" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\location.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="sunny" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\sunny.svg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="WeatherViewModel_Init24HourItem_Init24HourItemis_executed" xml:space="preserve">
-	  <value>Init24HourItemis executed</value>
+    <value>Init24HourItemis executed</value>
   </data>
 </root>
