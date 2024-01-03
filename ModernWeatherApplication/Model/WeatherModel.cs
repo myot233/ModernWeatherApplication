@@ -8,7 +8,7 @@ namespace ModernWeatherApplication.Model
 {
     public class WeatherModel
     {
-        private DayWeatherData _dayWeatherData;
+        private readonly DayWeatherData _dayWeatherData;
         public string Date
         {
             get

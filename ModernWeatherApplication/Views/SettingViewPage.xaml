@@ -17,31 +17,35 @@
               <RowDefinition></RowDefinition>
               <RowDefinition></RowDefinition>
           </Grid.RowDefinitions>
-          <StackPanel Orientation="Horizontal">
-              
-              <TextBlock Text="454"></TextBlock>
-            <ComboBox
-                Margin="15"
-                Width="150"
-                ItemsSource="{Binding ViewModel.FirstPlace}"
-                SelectedItem="{Binding ViewModel.FirstSelected}"
-                SelectionChanged="Selector_OnSelected"
-            >
-            </ComboBox>
-              <ComboBox
-                  Margin="15"
-                  Width="150"
-                  ItemsSource="{Binding ViewModel.SecondPlace}"
-                  SelectedItem="{Binding ViewModel.SecondSelected}"
-                  SelectionChanged="Selector1_OnSelected"
-              ></ComboBox>
-              <ComboBox
-                  Margin="15"
-                  Width="150"
-                  ItemsSource="{Binding ViewModel.LastPlace}"
-                  SelectedItem="{Binding ViewModel.LastSelected}"
-                  SelectionChanged="Selector_OnSelectionChanged"
-              ></ComboBox>
+          <StackPanel>
+              <StackPanel Orientation="Horizontal" Margin="25">
+                  <TextBlock Text="当前位置:" VerticalAlignment="Center"></TextBlock>
+                  <ComboBox
+                      Margin="15"
+                      Width="150"
+                      ItemsSource="{Binding ViewModel.FirstPlace}"
+                      SelectedItem="{Binding ViewModel.FirstSelected}"
+                      SelectionChanged="Selector_OnSelected"
+                  >
+                  </ComboBox>
+                  <TextBlock Text="->" VerticalAlignment="Center"></TextBlock>
+                  <ComboBox
+                      Margin="15"
+                      Width="150"
+                      ItemsSource="{Binding ViewModel.SecondPlace}"
+                      SelectedItem="{Binding ViewModel.SecondSelected}"
+                      SelectionChanged="Selector1_OnSelected"
+                  ></ComboBox>
+                  <TextBlock Text="->" VerticalAlignment="Center"></TextBlock>
+                <ComboBox
+                      Margin="15"
+                      Width="150"
+                      ItemsSource="{Binding ViewModel.LastPlace}"
+                      SelectedItem="{Binding ViewModel.LastSelected}"
+                      SelectionChanged="Selector_OnSelectionChanged"
+                  ></ComboBox>
+              </StackPanel>
+
         </StackPanel>
 </Grid> 
 </Page>

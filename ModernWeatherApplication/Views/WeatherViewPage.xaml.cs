@@ -1,4 +1,7 @@
-﻿using LiveChartsCore.SkiaSharpView.Painting;
+﻿using LiveChartsCore;
+using LiveChartsCore.Measure;
+using LiveChartsCore.SkiaSharpView.Extensions;
+using LiveChartsCore.SkiaSharpView.Painting;
 using ModernWeatherApplication.Controls;
 using ModernWeatherApplication.ViewModel;
 using SkiaSharp;
@@ -13,7 +16,7 @@ namespace ModernWeatherApplication.Views
     {
         public WeatherViewModel ViewModel { get; }
 
-        
+
 
 
         public WeatherViewPage(WeatherViewModel viewModel)

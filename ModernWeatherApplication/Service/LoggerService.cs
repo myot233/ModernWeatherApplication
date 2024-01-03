@@ -11,11 +11,6 @@ namespace ModernWeatherApplication.Service
     {
         ILoggerFactory factory = LoggerFactory.Create(builder => builder.AddConsole());
 
-        
-        public LoggerService()
-        {
-
-        }
 
         public ILogger CreateLogger(string name) => factory.CreateLogger(name);
     }

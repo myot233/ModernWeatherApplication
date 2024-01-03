@@ -15,22 +15,66 @@
       Background="WhiteSmoke"
       mc:Ignorable="d" 
       Title="WeatherViewPage">
-    <ScrollViewer VerticalScrollBarVisibility="Auto" >
+    <ScrollViewer VerticalScrollBarVisibility="Visible" >
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="2*"></RowDefinition>
                 <RowDefinition Height="1*"></RowDefinition>
-                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="3*"></RowDefinition>
+                <RowDefinition Height="3*"></RowDefinition>
                 <RowDefinition Height="1*"></RowDefinition>
             </Grid.RowDefinitions>
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Border 
+                    Grid.Column="0" 
+                    Visibility="{Binding ViewModel.LstVisibility}" 
+                    BorderThickness="1"
+                    Padding="25"
+                    Background="White"
+                    BorderBrush="Gray" 
+                    CornerRadius="25" 
+                    Margin="15,15"
+                >
+                    
+                    <ListView 
+                        MinHeight="120"
+                        MaxHeight="170"
+                        
+                        ItemsSource="{Binding ViewModel.IndexSeries}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate DataType="{x:Type model:WeatherIndexModel}">
+                                <WrapPanel>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="{Binding Name,Mode=OneWay}" Foreground="Black" Margin="5,0,0,0"></TextBlock>
+                                        <StackPanel Orientation="Horizontal">
+                                            <ProgressBar Value="{Binding Value,Mode=OneWay}"  Width="200" Margin="5,0,0,0">
+                                            </ProgressBar>
+                                            <Ellipse Width="12" Height="12" Fill="LightBlue" Margin="5,0,0,0"></Ellipse>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </WrapPanel>
+                            </DataTemplate>
+                            </ListView.ItemTemplate>
+                    </ListView>
+
+
+                </Border>
+            </Grid>
             <Border 
             Grid.Row="2" 
+            MinHeight="200"
             Visibility="{Binding ViewModel.LstVisibility}" 
             BorderThickness="1" 
             Background="White"
             BorderBrush="Gray" 
             CornerRadius="25" 
             Margin="15,15"
+            
             >
                 <lvc:CartesianChart
                 

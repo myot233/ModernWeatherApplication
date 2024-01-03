@@ -27,6 +27,7 @@ namespace ModernWeatherApplication.Service
         private const string SevenDayUrl = "https://devapi.qweather.com/v7/weather/7d";
         private const string PerHourUrl = "https://devapi.qweather.com/v7/weather/24h";
         private const string AirPollutionUrl = "https://devapi.qweather.com/v7/air/now";
+        private const string WeatherIndexUrl = "https://devapi.qweather.com/v7/indices/1d";
         private ISnackbarService snackbarService;
         private const string Key = "9604612732b54b618f4c6f82e5b598db";
         private const string Lang = "zh-hans";
@@ -65,6 +66,7 @@ namespace ModernWeatherApplication.Service
             }
         }
 
+        
 
         public async Task<List<HourWeatherData>> FetchWeatherDataPerHour(int location)
         {
@@ -82,6 +84,28 @@ namespace ModernWeatherApplication.Service
             catch (HttpRequestException exception)
             {
                 snackbarService.Show("错误", exception.Message, ControlAppearance.Caution,timeout:TimeSpan.FromSeconds(10));
+                throw;
+
+            }
+        }
+
+        public async Task<List<WeatherIndex>> FetchWeatherIndex(int location)
+        {
+            try
+            {
+                var result = await _client.GetAsync($"{WeatherIndexUrl}?location={location}&key={Key}&type=0");
+                var jobj = JObject.Parse(await result.Content.ReadAsStringAsync());
+                if ((jobj["code"] ?? throw new InvalidOperationException("error code")).Value<int>() != 200)
+                {
+                    throw new InvalidOperationException($"operation failed {jobj}");
+                }
+                _logger.LogInformation(jobj.ToString());
+                return jobj["daily"]!.Children().ToList().Select((x) =>
+                    x.ToObject<WeatherIndex>()!).ToList();
+            }
+            catch (HttpRequestException exception)
+            {
+                snackbarService.Show("错误", exception.Message, ControlAppearance.Caution, timeout: TimeSpan.FromSeconds(10));
                 throw;
 
             }
@@ -106,157 +130,11 @@ namespace ModernWeatherApplication.Service
 
             }
         }
+        
 
 
 
 
 
     }
-
-    public class AirPollution
-    {
-        public string pubTime { get; set; }
-        public string aqi { get; set; }
-        public string level { get; set; }
-        public string category { get; set; }
-        public string primary { get; set; }
-        public string pm10 { get; set; }
-        public string pm2p5 { get; set; }
-        public string no2 { get; set; }
-        public string so2 { get; set; }
-        public string co { get; set; }
-        public string o3 { get; set; }
-    }
-
-    public class HourWeatherData
-    {
-        public string fxTime { get; set; }
-        public string temp { get; set; }
-        public string icon { get; set; }
-        public string text { get; set; }
-        public string wind360 { get; set; }
-        public string windDir { get; set; }
-        public string windScale { get; set; }
-        public string windSpeed { get; set; }
-        public string humidity { get; set; }
-        public string pop { get; set; }
-        public string precip { get; set; }
-        public string pressure { get; set; }
-        public string cloud { get; set; }
-        public string dew { get; set; }
-    }
-
-
-    public class DayWeatherData
-    {
-        /// <summary>
-        /// 
-        /// </summary>
-        public string fxDate { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public string sunrise { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public string sunset { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public string moonrise { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public string moonset { get; set; }
-        /// <summary>
-        /// 峨眉月
-        /// </summary>
-        public string moonPhase { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public string moonPhaseIcon { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public string tempMax { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public string tempMin { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public string iconDay { get; set; }
-        /// <summary>
-        /// 阴
-        /// </summary>
-        public string textDay { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public string iconNight { get; set; }
-        /// <summary>
-        /// 多云
-        /// </summary>
-        public string textNight { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public string wind360Day { get; set; }
-        /// <summary>
-        /// 西北风
-        /// </summary>
-        public string windDirDay { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public string windScaleDay { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public string windSpeedDay { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public string wind360Night { get; set; }
-        /// <summary>
-        /// 西北风
-        /// </summary>
-        public string windDirNight { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public string windScaleNight { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public string windSpeedNight { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public string humidity { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public string precip { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public string pressure { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public string vis { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public string cloud { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public string uvIndex { get; set; }
-    }
-
 }

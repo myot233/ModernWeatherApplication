@@ -35,6 +35,9 @@ public partial class WeatherViewModel : ObservableObject,INavigationAware
 
     [ObservableProperty] private IEnumerable<ISeries> _pieSeries;
 
+    
+    public List<WeatherIndexModel> IndexSeries { get; } = new();
+
     public WeatherViewModel(ApiService service, SettingViewModel viewModel)
     {
 
@@ -43,7 +46,7 @@ public partial class WeatherViewModel : ObservableObject,INavigationAware
         LiveCharts.Configure(config => config.HasGlobalSKTypeface(SKFontManager.Default.MatchCharacter('汉')));
         viewModel.onLocationChanged += async () =>
         {
-            Console.WriteLine("location changed");
+            
             Items.Clear();
             await InitAllAsync(service,viewModel);
         };
@@ -61,6 +64,7 @@ public partial class WeatherViewModel : ObservableObject,INavigationAware
             {
                 await Init24HourItem(service,viewModel);
                 await InitSevenDayItem(service,viewModel);
+                await InitWeatherIndex(service, viewModel);
                 break;
             }
             catch (HttpRequestException)
@@ -72,8 +76,13 @@ public partial class WeatherViewModel : ObservableObject,INavigationAware
         }
     }
 
-   
 
+    public async Task InitWeatherIndex(ApiService service, SettingViewModel viewModel)
+    {
+        var lst = await service.FetchWeatherIndex(viewModel.Location);
+        IndexSeries.AddRange(lst.Select(x => new WeatherIndexModel(x)));
+
+    }
 
     public async Task InitSevenDayItem(ApiService service, SettingViewModel viewModel)
     {
@@ -93,12 +102,13 @@ public partial class WeatherViewModel : ObservableObject,INavigationAware
         {
             new LineSeries<double>
             {
-                DataLabelsSize = 15,
+                DataLabelsSize = 17,
                 DataLabelsPaint = new SolidColorPaint(SKColors.DarkGray),
                 DataLabelsPosition = LiveChartsCore.Measure.DataLabelsPosition.Top,
                 DataLabelsFormatter = (point) => point.Coordinate.PrimaryValue.ToString(CultureInfo.InvariantCulture) + "℃",
                 Values = lst.Select(x => double.Parse(x.temp)),
                 Name = "温度",
+                Stroke = new SolidColorPaint(SKColors.Blue) { StrokeThickness = 1 },
                 Fill = new SolidColorPaint(SKColors.CornflowerBlue),
                 LineSmoothness = 1,
                 
