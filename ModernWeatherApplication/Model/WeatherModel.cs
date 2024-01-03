@@ -1,7 +1,9 @@
-﻿using LiveChartsCore;
+﻿using System.Windows.Media;
+using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using ModernWeatherApplication.Service;
+using ModernWeatherApplication.ViewModel;
 using SkiaSharp;
 
 namespace ModernWeatherApplication.Model
@@ -9,6 +11,8 @@ namespace ModernWeatherApplication.Model
     public class WeatherModel
     {
         private readonly DayWeatherData _dayWeatherData;
+
+
         public string Date
         {
             get
@@ -61,6 +65,7 @@ namespace ModernWeatherApplication.Model
                     new PieSeries<int>
                     {
                         Name = "日间",
+                        
                         ToolTipLabelFormatter = (x) => _dayWeatherData.sunrise,
                         Values = new[]{  span.Minutes + span.Hours * 60 },
                         Fill = new SolidColorPaint(SKColors.LightYellow)
@@ -84,6 +89,7 @@ namespace ModernWeatherApplication.Model
         {
            
             _dayWeatherData = data;
+            
         }
     }
 }

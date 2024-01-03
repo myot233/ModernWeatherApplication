@@ -12,11 +12,18 @@
       ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
       ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-      Background="WhiteSmoke"
+      d:DesignWidth="1024"
       mc:Ignorable="d" 
       Title="WeatherViewPage">
+    
     <ScrollViewer VerticalScrollBarVisibility="Visible" >
         <Grid>
+            <Grid.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="Background" Value="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"></Setter>
+                    <Setter Property="BorderBrush" Value="{ui:ThemeResource CardStrokeColorDefaultBrush}"></Setter>
+                </Style>
+            </Grid.Resources>
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"></RowDefinition>
                 <RowDefinition Height="3*"></RowDefinition>
@@ -26,52 +33,62 @@
             <Grid Grid.Row="3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
+                <Border 
+                    Grid.Column="1" 
+                    Visibility="{Binding ViewModel.LstVisibility}" 
+                    BorderThickness="1"
+                    Padding="25"
+                    Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}" 
+                    CornerRadius="25" 
+                    Margin="15,15"
+                >
+                    <TextBlock Text="{Binding ViewModel.SelectedIndex.Detail}"></TextBlock>
+                </Border>
+                <!-- 天气指数 -->
                 <Border 
                     Grid.Column="0" 
                     Visibility="{Binding ViewModel.LstVisibility}" 
                     BorderThickness="1"
                     Padding="25"
-                    Background="White"
-                    BorderBrush="Gray" 
+                    Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}" 
                     CornerRadius="25" 
                     Margin="15,15"
                 >
                     
                     <ListView 
-                        MinHeight="120"
                         MaxHeight="170"
-                        
+                        MinWidth="250"
+                        SelectedItem="{Binding ViewModel.SelectedIndex}"
                         ItemsSource="{Binding ViewModel.IndexSeries}">
                         <ListView.ItemTemplate>
                             <DataTemplate DataType="{x:Type model:WeatherIndexModel}">
                                 <WrapPanel>
-                                    <StackPanel Orientation="Vertical">
-                                        <TextBlock Text="{Binding Name,Mode=OneWay}" Foreground="Black" Margin="5,0,0,0"></TextBlock>
+                                    <StackPanel Orientation="Vertical" Margin="0,0,15,0">
+                                        <TextBlock Text="{Binding Name,Mode=OneWay}" Margin="5,0,0,0"></TextBlock>
                                         <StackPanel Orientation="Horizontal">
                                             <ProgressBar Value="{Binding Value,Mode=OneWay}"  Width="200" Margin="5,0,0,0">
                                             </ProgressBar>
-                                            <Ellipse Width="12" Height="12" Fill="LightBlue" Margin="5,0,0,0"></Ellipse>
+                                            <Ellipse Width="13" Height="13" Fill="{Binding Color}" Margin="5,0,0,0"></Ellipse>
                                         </StackPanel>
                                     </StackPanel>
                                 </WrapPanel>
                             </DataTemplate>
                             </ListView.ItemTemplate>
                     </ListView>
-
-
                 </Border>
             </Grid>
+            <!-- 24h天气图表 -->
             <Border 
             Grid.Row="2" 
             MinHeight="200"
             Visibility="{Binding ViewModel.LstVisibility}" 
             BorderThickness="1" 
-            Background="White"
-            BorderBrush="Gray" 
             CornerRadius="25" 
             Margin="15,15"
             
@@ -81,6 +98,7 @@
                 XAxes="{Binding ViewModel.XAxes}"
                 YAxes="{Binding ViewModel.YAxes}"
                 Series="{Binding ViewModel.Series}"
+               
             ></lvc:CartesianChart>
             </Border>
             <Grid Grid.Row="0">
@@ -92,8 +110,6 @@
                     Grid.Column="1" 
                     Visibility="{Binding ViewModel.LstVisibility}" 
                     BorderThickness="1" 
-                    Background="White"
-                    BorderBrush="Gray" 
                     CornerRadius="25" 
                     Margin="20,15">
                     <Grid>
@@ -101,7 +117,12 @@
                             <ColumnDefinition></ColumnDefinition>
                             <ColumnDefinition></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <lvc:PieChart Series="{Binding ViewModel.Selected.Pie}" LegendPosition="Right"></lvc:PieChart>
+                        <lvc:PieChart 
+                            
+                            Series="{Binding ViewModel.Selected.Pie}" 
+                            LegendPosition="Right"
+                            LegendTextPaint="{Binding ViewModel.LegendTextPaint}"
+                            ></lvc:PieChart>
                         <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <StackPanel.Resources>
                                 <Style TargetType="TextBlock">
@@ -132,7 +153,7 @@
                 </Border>
                     <ui:ProgressRing  Grid.Column="0" IsIndeterminate="True" Visibility="{Binding ViewModel.LoadingVisibility}"></ui:ProgressRing>
 
-                <Border Visibility="{Binding ViewModel.LstVisibility}" Grid.Column="0" BorderThickness="1" BorderBrush="Gray" Background="White" Padding="25,25" CornerRadius="25" Margin="15,15">
+                <Border Visibility="{Binding ViewModel.LstVisibility}" Grid.Column="0" BorderThickness="1"  Padding="25,25" CornerRadius="25" Margin="15,15">
                     <Grid >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition ></ColumnDefinition>
@@ -210,7 +231,7 @@
                 <ListView.ItemTemplate>
                     <DataTemplate DataType="{x:Type model:WeatherModel}">
                         <WrapPanel Orientation="Horizontal">
-                            <Border Padding="5,5" Background="White" CornerRadius="25" BorderBrush="Gray" BorderThickness="1">
+                            <Border Padding="5,5" CornerRadius="25" Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}" BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"  BorderThickness="1">
                                 <StackPanel>
                                     <TextBlock Text="{Binding Date }" HorizontalAlignment="Center"></TextBlock>
                                     <svgc:SvgViewbox Source="{Binding Image}" Width="70" Height="70" Margin="45,15"></svgc:SvgViewbox>

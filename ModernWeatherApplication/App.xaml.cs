@@ -13,8 +13,7 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Threading;
 using ModernWeatherApplication.ViewModel;
-using Wpf.Ui.Contracts;
-using Wpf.Ui.Services;
+using Wpf.Ui;
 
 namespace ModernWeatherApplication
 {
@@ -52,7 +51,7 @@ namespace ModernWeatherApplication
         /// </summary>
         /// <typeparam name="T">Type of the service to get.</typeparam>
         /// <returns>Instance of the service or <see langword="null"/>.</returns>
-        public static T GetService<T>()
+        public static T? GetService<T>()
             where T : class
         {
             return _host.Services.GetService(typeof(T)) as T;

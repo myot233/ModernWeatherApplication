@@ -9,7 +9,9 @@ using System.Windows;
 using LiveChartsCore.SkiaSharpView.Painting;
 using ModernWeatherApplication.Model;
 using SkiaSharp;
+using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
+using System.Windows.Ink;
 
 namespace ModernWeatherApplication.ViewModel;
 
@@ -34,9 +36,10 @@ public partial class WeatherViewModel : ObservableObject,INavigationAware
     [ObservableProperty] private Axis[] _yAxes;
 
     [ObservableProperty] private IEnumerable<ISeries> _pieSeries;
+    [ObservableProperty] private WeatherIndexModel _selectedIndex;
 
-    
     public List<WeatherIndexModel> IndexSeries { get; } = new();
+    [ObservableProperty] private SolidColorPaint _legendTextPaint;
 
     public WeatherViewModel(ApiService service, SettingViewModel viewModel)
     {
@@ -49,8 +52,42 @@ public partial class WeatherViewModel : ObservableObject,INavigationAware
             
             Items.Clear();
             await InitAllAsync(service,viewModel);
+            ChangeControlsByTheme(ApplicationThemeManager.GetAppTheme());
         };
+        ApplicationThemeManager.Changed += (sender, _) => { ChangeControlsByTheme(sender); };
+
         InitAllAsync(service, viewModel);
+    }
+
+    private void ChangeControlsByTheme(ApplicationTheme sender)
+    {
+        switch (sender)
+        {
+            case ApplicationTheme.Light or ApplicationTheme.HighContrast:
+                LegendTextPaint = new SolidColorPaint(SKColors.Black);
+                foreach (var xAx in XAxes)
+                {
+                    xAx.LabelsPaint = LegendTextPaint;
+                }
+                foreach (var series in Series)
+                {
+                    (series as LineSeries<double>).DataLabelsPaint = new SolidColorPaint(SKColors.DarkGray);
+                }
+                break;
+            case ApplicationTheme.Dark:
+                LegendTextPaint = new SolidColorPaint(SKColors.White);
+                foreach (var xAx in XAxes)
+                {
+                    xAx.LabelsPaint = LegendTextPaint;
+                        
+                }
+                foreach (var series in Series)
+                {
+                    (series as LineSeries<double>).DataLabelsPaint = new SolidColorPaint(SKColors.LightGray);
+                }
+                break;
+                
+        }
     }
 
     public async Task InitAllAsync(ApiService service, SettingViewModel viewModel)
@@ -62,9 +99,14 @@ public partial class WeatherViewModel : ObservableObject,INavigationAware
         {
             try
             {
-                await Init24HourItem(service,viewModel);
+               /* await Init24HourItem(service,viewModel);
                 await InitSevenDayItem(service,viewModel);
-                await InitWeatherIndex(service, viewModel);
+                await InitWeatherIndex(service, viewModel); */
+               await Task.WhenAll(
+                   Init24HourItem(service, viewModel), 
+                   InitSevenDayItem(service, viewModel),
+                   InitWeatherIndex(service, viewModel)
+                   );
                 break;
             }
             catch (HttpRequestException)
@@ -108,7 +150,7 @@ public partial class WeatherViewModel : ObservableObject,INavigationAware
                 DataLabelsFormatter = (point) => point.Coordinate.PrimaryValue.ToString(CultureInfo.InvariantCulture) + "℃",
                 Values = lst.Select(x => double.Parse(x.temp)),
                 Name = "温度",
-                Stroke = new SolidColorPaint(SKColors.Blue) { StrokeThickness = 1 },
+                Stroke = new SolidColorPaint(SKColors.Blue) { StrokeThickness = 0 },
                 Fill = new SolidColorPaint(SKColors.CornflowerBlue),
                 LineSmoothness = 1,
                 

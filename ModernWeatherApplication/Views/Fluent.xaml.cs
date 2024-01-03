@@ -1,4 +1,5 @@
-﻿using Wpf.Ui.Contracts;
+﻿using Wpf.Ui;
+
 
 namespace ModernWeatherApplication.Views
 {

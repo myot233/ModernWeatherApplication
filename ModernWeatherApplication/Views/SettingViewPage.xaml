@@ -5,47 +5,97 @@
       xmlns:local="clr-namespace:ModernWeatherApplication.Views"
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:utils ="clr-namespace:ModernWeatherApplication.Utils"
+      xmlns:app="clr-namespace:Wpf.Ui.Appearance;assembly=Wpf.Ui"
       d:DataContext="{d:DesignInstance  local:SettingViewPage }"
       ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
       ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-      Background="WhiteSmoke"
+      
       mc:Ignorable="d" 
       Title="SettingViewPage">
-      <Grid>
-          <Grid.RowDefinitions>
-              <RowDefinition></RowDefinition>
-              <RowDefinition></RowDefinition>
-          </Grid.RowDefinitions>
-          <StackPanel>
-              <StackPanel Orientation="Horizontal" Margin="25">
-                  <TextBlock Text="当前位置:" VerticalAlignment="Center"></TextBlock>
-                  <ComboBox
-                      Margin="15"
-                      Width="150"
-                      ItemsSource="{Binding ViewModel.FirstPlace}"
-                      SelectedItem="{Binding ViewModel.FirstSelected}"
-                      SelectionChanged="Selector_OnSelected"
-                  >
-                  </ComboBox>
-                  <TextBlock Text="->" VerticalAlignment="Center"></TextBlock>
-                  <ComboBox
-                      Margin="15"
-                      Width="150"
-                      ItemsSource="{Binding ViewModel.SecondPlace}"
-                      SelectedItem="{Binding ViewModel.SecondSelected}"
-                      SelectionChanged="Selector1_OnSelected"
-                  ></ComboBox>
-                  <TextBlock Text="->" VerticalAlignment="Center"></TextBlock>
+    <Page.Resources>
+        <ResourceDictionary >
+            <utils:ThemeToIndexConverter x:Key="ThemeToIndexConverter"></utils:ThemeToIndexConverter>
+        </ResourceDictionary>
+    </Page.Resources>
+        
+    <StackPanel Margin="15,5,0,5">
+        <ui:TextBlock Appearance="Primary" Text="一般设置" FontTypography="Subtitle" Margin="15"></ui:TextBlock>
+<ui:CardControl Margin="15,0,15,5" Icon="{ui:SymbolIcon Color24}">
+            <ui:CardControl.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <ui:TextBlock
+                              Grid.Row="0"
+                              FontTypography="Body"
+                              Text="主题" />
+                    <ui:TextBlock
+                              Grid.Row="1"
+                              Foreground="{ui:ThemeResource  TextFillColorSecondaryBrush}"
+                              Text="选择一个用来展示的主题" />
+                </Grid>
+
+            </ui:CardControl.Header>
+            <ComboBox
+                      MinWidth="200"
+                      SelectedIndex="{Binding ViewModel.CurrentApplicationTheme, Converter={StaticResource ThemeToIndexConverter}, Mode=TwoWay}">
+                <ComboBoxItem Content="明亮" />
+                <ComboBoxItem Content="暗黑" />
+                <ComboBoxItem Content="高对比" />
+            </ComboBox>
+        </ui:CardControl>
+              <ui:CardControl Margin="15,0,15,5" Icon="{ui:SymbolIcon Map24}">
+                  <ui:CardControl.Header>
+                      <Grid>
+                          <Grid.RowDefinitions>
+                              <RowDefinition Height="Auto" />
+                              <RowDefinition Height="Auto" />
+                          </Grid.RowDefinitions>
+                          <ui:TextBlock
+                              Grid.Row="0"
+                              FontTypography="Body"
+                              Text="位置" />
+                          <ui:TextBlock
+                              Grid.Row="1"
+                              Foreground="{ui:ThemeResource  TextFillColorSecondaryBrush}"
+                              Text="选择你所在的地方" />
+                      </Grid>
+
+                  </ui:CardControl.Header>
+            <StackPanel Orientation="Horizontal" >
                 <ComboBox
-                      Margin="15"
-                      Width="150"
-                      ItemsSource="{Binding ViewModel.LastPlace}"
-                      SelectedItem="{Binding ViewModel.LastSelected}"
-                      SelectionChanged="Selector_OnSelectionChanged"
-                  ></ComboBox>
-              </StackPanel>
+                    Margin="15,0"
+                    Width="125"
+                    ItemsSource="{Binding ViewModel.FirstPlace}"
+                    SelectedItem="{Binding ViewModel.FirstSelected}"
+                    SelectionChanged="Selector_OnSelected"
+                >
+                </ComboBox>
+                <TextBlock Text="->" VerticalAlignment="Center"></TextBlock>
+                <ComboBox
+                    Margin="15,0"
+                    Width="125"
+                    ItemsSource="{Binding ViewModel.SecondPlace}"
+                    SelectedItem="{Binding ViewModel.SecondSelected}"
+                    SelectionChanged="Selector1_OnSelected"
+                ></ComboBox>
+                <TextBlock Text="->" VerticalAlignment="Center"></TextBlock>
+                <ComboBox
+                    Margin="15,0"
+                    Width="125"
+                    ItemsSource="{Binding ViewModel.LastPlace}"
+                    SelectedItem="{Binding ViewModel.LastSelected}"
+                    SelectionChanged="Selector_OnSelectionChanged"
+                ></ComboBox>
+            </StackPanel>
+        </ui:CardControl>
+        
+            
 
         </StackPanel>
-</Grid> 
+
 </Page>

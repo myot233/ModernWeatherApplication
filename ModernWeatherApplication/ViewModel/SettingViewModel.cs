@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Drawing;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Newtonsoft.Json.Linq;
 
@@ -7,32 +8,40 @@ using Wpf.Ui.Controls;
 using System.Windows;
 using System.Windows.Controls;
 using ModernWeatherApplication.Service;
-
+using Wpf.Ui.Appearance;
 namespace ModernWeatherApplication.ViewModel
 {
     public partial class SettingViewModel: ObservableObject, INavigationAware
     {
         public int Location => _jroot[FirstSelected]![SecondSelected]![LastSelected]!.Value<int>();
 
-        public event Action onLocationChanged; 
+        public event Action onLocationChanged;
 
-        [ObservableProperty] private string _firstSelected;
-        [ObservableProperty] private string _secondSelected;
-        [ObservableProperty] private string _lastSelected;
+        [ObservableProperty]
+        private ApplicationTheme _currentApplicationTheme = ApplicationTheme.Unknown;
+        [ObservableProperty] private string _firstSelected = "北京市";
+        [ObservableProperty] private string _secondSelected = "北京市";
+        [ObservableProperty] private string _lastSelected = "北京";
         [ObservableProperty] private List<string> _firstPlace;
         [ObservableProperty] private List<string> _secondPlace;
         [ObservableProperty] private List<string> _lastPlace;
+        
         
 
         private readonly JObject _jroot = JObject.Parse(System.Text.Encoding.UTF8.GetString(Resources.location));
         public SettingViewModel()
         {
+            CurrentApplicationTheme = ApplicationThemeManager.GetAppTheme();
             onLocationChanged += () => { };
             FirstPlace = _jroot.Properties().Select(x=>x.Name).ToList();
             FirstSelected = FirstPlace[0];
 
         }
-
+        partial void OnCurrentApplicationThemeChanged(ApplicationTheme oldValue, ApplicationTheme newValue)
+        {
+            ApplicationThemeManager.Apply(newValue);
+        }
+       
         public void OnFirstSelected(object sender, SelectionChangedEventArgs selectionChangedEventArgs)
 
         {
