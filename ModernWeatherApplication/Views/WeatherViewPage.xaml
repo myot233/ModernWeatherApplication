@@ -64,6 +64,7 @@
                     <ListView 
                         MaxHeight="170"
                         MinWidth="250"
+                        SelectionMode="Single"
                         SelectedItem="{Binding ViewModel.SelectedIndex}"
                         ItemsSource="{Binding ViewModel.IndexSeries}">
                         <ListView.ItemTemplate>
