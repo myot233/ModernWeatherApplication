@@ -3,11 +3,39 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local ="clr-namespace:ModernWeatherApplication.Views"
+      xmlns:ui ="http://schemas.lepo.co/wpfui/2022/xaml"
+      d:DataContext="{d:DesignInstance local:MainViewPage}"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MainViewPage">
 
     <Grid>
-        <TextBlock Text="hello"></TextBlock>
+        <Grid.RowDefinitions>
+            <RowDefinition ></RowDefinition>
+            <RowDefinition ></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <ui:Image Height="512" Grid.Row="0" Source="pack://application:,,,/Resources/main.png" Margin="15" CornerRadius="25"></ui:Image>
+        <ui:TextBlock  FontTypography="Subtitle"  HorizontalAlignment="Center" Grid.Row="1" TextWrapping="Wrap" >
+            一个基于wpfui和livecharts2开发的天气显示软件
+        </ui:TextBlock>
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
+            <ui:Button Content="源代码" Margin="5" Command="{Binding ViewModel.SourceCodeButtonCommand}">
+        <ui:Button.Icon>
+            <ui:SymbolIcon Symbol="Code24"></ui:SymbolIcon>
+        </ui:Button.Icon>
+         
+        </ui:Button>
+
+            <ui:Button Margin="5" Content="文档">
+                <ui:Button.Icon>
+                    <ui:SymbolIcon Symbol="book24"></ui:SymbolIcon>
+                </ui:Button.Icon>
+            </ui:Button>
+        
+        
+        </StackPanel>
+
     </Grid>
 </Page>

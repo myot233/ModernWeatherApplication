@@ -15,6 +15,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Wpf.Ui.Controls;
+using CommunityToolkit.Mvvm.Input;
+using ModernWeatherApplication.Service;
 
 namespace ModernWeatherApplication.Views
 {
@@ -26,17 +28,44 @@ namespace ModernWeatherApplication.Views
         
         public MainViewPage(MainViewPageModel viewModel)
         {
+            
             ViewModel = viewModel;
+            DataContext = this;
             InitializeComponent();
         }
 
         public MainViewPageModel ViewModel { get; set; }
+
+        
     }
 
-    public class MainViewPageModel:ObservableObject,INavigationAware
+    public partial class MainViewPageModel : ObservableObject, INavigationAware
     {
-        
-        
+
+        public MainViewPageModel()
+        {
+
+        }
+
+        [RelayCommand]
+        private void SourceCodeButton()
+        {
+            var target = "https://github.com/myot233/ModernWeatherApplication";
+            try
+            {
+                System.Diagnostics.Process.Start("explorer.exe",target);
+
+            }
+            catch (System.ComponentModel.Win32Exception noBrowser)
+            {
+                if (noBrowser.ErrorCode == -2147467259)
+                    System.Windows.MessageBox.Show(noBrowser.Message);
+            }
+            catch (System.Exception other)
+            {
+                System.Windows.MessageBox.Show(other.Message);
+            }
+        }
         
         public void OnNavigatedTo()
         {
