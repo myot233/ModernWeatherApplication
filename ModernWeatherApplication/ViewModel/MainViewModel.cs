@@ -9,13 +9,6 @@ namespace ModernWeatherApplication.ViewModel
         private string _applicationTitle = "天气";
 
 
-        [ObservableProperty] 
-        private Type _weatherPage = typeof(WeatherViewPage);
-
-        [ObservableProperty] 
-        private Type _settingPage = typeof(SettingViewPage);
-
-        [ObservableProperty]
-        private Type _mainPage = typeof(MainViewPage);
+        
     }
 }

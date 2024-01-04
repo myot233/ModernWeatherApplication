@@ -24,34 +24,46 @@
         </ui:TitleBar>
 
         <ui:NavigationView 
-            OpenPaneLength="150"
+            
             Grid.Row="1"
-            x:Name="nav"
-                           IsBackButtonVisible="Collapsed"
-                           IsPaneToggleVisible="True">
+            x:Name="Nav"
+            IsBackButtonVisible="Collapsed"
+            IsPaneToggleVisible="True">
             <ui:NavigationView.ContentOverlay>
                 <Grid>
                     <ui:SnackbarPresenter x:Name="SnackbarPresenter" />
                 </Grid>
             </ui:NavigationView.ContentOverlay>
             <ui:NavigationView.MenuItems>
-                <ui:NavigationViewItem Content="主页" TargetPageType="{Binding ViewModel.MainPage}">
+                <ui:NavigationViewItem Content="主页" TargetPageType="{x:Type local:MainViewPage}">
                     <ui:NavigationViewItem.Icon>
                         <ui:SymbolIcon Symbol="Home24"></ui:SymbolIcon>
                     </ui:NavigationViewItem.Icon>
                 </ui:NavigationViewItem>
-                <ui:NavigationViewItem Content="天气情况" TargetPageType="{Binding ViewModel.WeatherPage}">
+                <ui:NavigationViewItem Content="天气情况" TargetPageType="{x:Type local:WeatherViewPage}">
                     <ui:NavigationViewItem.Icon>
                         <ui:SymbolIcon Symbol="WeatherCloudy20"></ui:SymbolIcon>
                     </ui:NavigationViewItem.Icon>
                 </ui:NavigationViewItem>
-                <ui:NavigationViewItem Content="设置" TargetPageType="{Binding ViewModel.SettingPage}">
+                
+                
+            </ui:NavigationView.MenuItems>
+            <ui:NavigationView.AutoSuggestBox>
+                <ui:AutoSuggestBox x:Name="AutoSuggestBox" PlaceholderText="Search">
+                    <ui:AutoSuggestBox.Icon>
+                        <ui:IconSourceElement>
+                            <ui:SymbolIconSource Symbol="Search24" />
+                        </ui:IconSourceElement>
+                    </ui:AutoSuggestBox.Icon>
+                </ui:AutoSuggestBox>
+            </ui:NavigationView.AutoSuggestBox>
+            <ui:NavigationView.FooterMenuItems>
+                <ui:NavigationViewItem Content="设置" TargetPageType="{x:Type local:SettingViewPage}">
                     <ui:NavigationViewItem.Icon>
                         <ui:SymbolIcon Symbol="Settings32"></ui:SymbolIcon>
                     </ui:NavigationViewItem.Icon>
                 </ui:NavigationViewItem>
-                
-            </ui:NavigationView.MenuItems>
+            </ui:NavigationView.FooterMenuItems>
         </ui:NavigationView>
     </Grid>
 </ui:FluentWindow>

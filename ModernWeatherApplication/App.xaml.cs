@@ -14,6 +14,7 @@ using System.Windows;
 using System.Windows.Threading;
 using ModernWeatherApplication.ViewModel;
 using Wpf.Ui;
+using Wpf.Ui.Demo.Mvvm.Services;
 
 namespace ModernWeatherApplication
 {
@@ -32,20 +33,23 @@ namespace ModernWeatherApplication
             .ConfigureAppConfiguration(c => { c.SetBasePath(Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location)); })
             .ConfigureServices((_, services) =>
             {
-                services.AddSingleton<FluentMainWindow>();
+                
                 services.AddSingleton<MainViewModel>();
                 services.AddHostedService<HostService>();
                 services.AddSingleton<ApiService>();
                 services.AddSingleton<LoggerService>();
+                services.AddSingleton<IPageService, PageService>();
                 services.AddSingleton<INavigationService,NavigationService>();
                 services.AddSingleton<ISnackbarService, SnackbarService>();
                 services.AddSingleton<IContentDialogService, ContentDialogService>();
+                services.AddSingleton<INavigationWindow,FluentMainWindow>();
                 services.AddSingleton<SettingViewModel>();
                 services.AddSingleton<SettingViewPage>();
                 services.AddSingleton<WeatherViewModel>();
                 services.AddSingleton<WeatherViewPage>();
                 services.AddSingleton<MainViewPage>();
-                services.AddSingleton <MainViewPageModel>();
+                services.AddSingleton<MainViewPageModel>();
+                
 
             }).Build();
 
@@ -63,9 +67,9 @@ namespace ModernWeatherApplication
         /// <summary>
         /// Occurs when the application is loading.
         /// </summary>
-        private void OnStartup(object sender, StartupEventArgs e)
+        private async void OnStartup(object sender, StartupEventArgs e)
         {
-            _host.Start();
+            await _host.StartAsync();
         }
 
         /// <summary>

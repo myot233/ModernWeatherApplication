@@ -28,7 +28,7 @@
          
         </ui:Button>
 
-            <ui:Button Margin="5" Content="文档">
+            <ui:Button Margin="5" Content="文档" Command="{Binding ViewModel.DocButtonCommand}">
                 <ui:Button.Icon>
                     <ui:SymbolIcon Symbol="book24"></ui:SymbolIcon>
                 </ui:Button.Icon>
