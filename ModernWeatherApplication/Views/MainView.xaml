@@ -4,8 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ModernWeatherApplication.Views" xmlns:modernweatherapplication="clr-namespace:ModernWeatherApplication"
-        xmlns:viewModel="clr-namespace:ModernWeatherApplication.ViewModel"
+        xmlns:local="clr-namespace:ModernWeatherApplication.Views"
         d:DataContext="{d:DesignInstance Type=local:FluentMainWindow}"
                  mc:Ignorable="d"
         Title="Fluent" Height="800" Width="1400">
@@ -36,6 +35,11 @@
                 </Grid>
             </ui:NavigationView.ContentOverlay>
             <ui:NavigationView.MenuItems>
+                <ui:NavigationViewItem Content="主页" TargetPageType="{Binding ViewModel.MainPage}">
+                    <ui:NavigationViewItem.Icon>
+                        <ui:SymbolIcon Symbol="Home24"></ui:SymbolIcon>
+                    </ui:NavigationViewItem.Icon>
+                </ui:NavigationViewItem>
                 <ui:NavigationViewItem Content="天气情况" TargetPageType="{Binding ViewModel.WeatherPage}">
                     <ui:NavigationViewItem.Icon>
                         <ui:SymbolIcon Symbol="WeatherCloudy20"></ui:SymbolIcon>

@@ -14,5 +14,8 @@ namespace ModernWeatherApplication.ViewModel
 
         [ObservableProperty] 
         private Type _settingPage = typeof(SettingViewPage);
+
+        [ObservableProperty]
+        private Type _mainPage = typeof(MainViewPage);
     }
 }

@@ -30,20 +30,23 @@ namespace ModernWeatherApplication
         private static readonly IHost _host = Host
             .CreateDefaultBuilder()
             .ConfigureAppConfiguration(c => { c.SetBasePath(Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location)); })
-            .ConfigureServices((context, services) =>
+            .ConfigureServices((_, services) =>
             {
                 services.AddSingleton<FluentMainWindow>();
-                services.AddSingleton<ViewModel.MainViewModel>();
+                services.AddSingleton<MainViewModel>();
                 services.AddHostedService<HostService>();
-                services.AddSingleton<WeatherViewModel>();
-                services.AddSingleton<WeatherViewPage>();                
+                services.AddSingleton<ApiService>();
+                services.AddSingleton<LoggerService>();
                 services.AddSingleton<INavigationService,NavigationService>();
                 services.AddSingleton<ISnackbarService, SnackbarService>();
                 services.AddSingleton<IContentDialogService, ContentDialogService>();
-                services.AddSingleton<ApiService>();
                 services.AddSingleton<SettingViewModel>();
                 services.AddSingleton<SettingViewPage>();
-                services.AddSingleton<LoggerService>();
+                services.AddSingleton<WeatherViewModel>();
+                services.AddSingleton<WeatherViewPage>();
+                services.AddSingleton<MainViewPage>();
+                services.AddSingleton <MainViewPageModel>();
+
             }).Build();
 
         /// <summary>

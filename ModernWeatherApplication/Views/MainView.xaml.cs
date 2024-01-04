@@ -4,7 +4,7 @@
 namespace ModernWeatherApplication.Views
 {
     /// <summary>
-    /// Fluent.xaml 的交互逻辑
+    /// MainView.xaml 的交互逻辑
     /// </summary>
     public partial class FluentMainWindow
     {

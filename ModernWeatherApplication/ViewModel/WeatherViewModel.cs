@@ -12,6 +12,7 @@ using SkiaSharp;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
 using System.Windows.Ink;
+using System.Windows.Threading;
 
 namespace ModernWeatherApplication.ViewModel;
 
@@ -38,7 +39,7 @@ public partial class WeatherViewModel : ObservableObject,INavigationAware
     [ObservableProperty] private IEnumerable<ISeries> _pieSeries;
     [ObservableProperty] private WeatherIndexModel _selectedIndex;
 
-    public List<WeatherIndexModel> IndexSeries { get; } = new();
+    [ObservableProperty] ObservableCollection<WeatherIndexModel> _indexSeries = new();
     [ObservableProperty] private SolidColorPaint _legendTextPaint;
 
     public WeatherViewModel(ApiService service, SettingViewModel viewModel)
@@ -107,6 +108,7 @@ public partial class WeatherViewModel : ObservableObject,INavigationAware
                    InitSevenDayItem(service, viewModel),
                    InitWeatherIndex(service, viewModel)
                    );
+                   ChangeControlsByTheme(ApplicationThemeManager.GetAppTheme());
                 break;
             }
             catch (HttpRequestException)
@@ -122,7 +124,11 @@ public partial class WeatherViewModel : ObservableObject,INavigationAware
     public async Task InitWeatherIndex(ApiService service, SettingViewModel viewModel)
     {
         var lst = await service.FetchWeatherIndex(viewModel.Location);
-        IndexSeries.AddRange(lst.Select(x => new WeatherIndexModel(x)));
+        foreach (var weatherIndexModel in lst.Select(x => new WeatherIndexModel(x)))
+        {
+            IndexSeries.Add(weatherIndexModel);
+        }
+        
 
     }
 

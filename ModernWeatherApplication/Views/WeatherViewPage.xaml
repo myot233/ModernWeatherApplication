@@ -94,13 +94,20 @@
             Margin="15,15"
             
             >
-                <lvc:CartesianChart
-                
-                XAxes="{Binding ViewModel.XAxes}"
-                YAxes="{Binding ViewModel.YAxes}"
-                Series="{Binding ViewModel.Series}"
-               
-            ></lvc:CartesianChart>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        
+                    </Grid.RowDefinitions>
+                    <ui:ProgressRing Grid.Row="0" IsIndeterminate="True" Visibility="{Binding ViewModel.LoadingVisibility}"></ui:ProgressRing>
+                    <lvc:CartesianChart Grid.Row="0"
+                        Visibility="{Binding ViewModel.LstVisibility}"
+                        XAxes="{Binding ViewModel.XAxes}"
+                        YAxes="{Binding ViewModel.YAxes}"
+                        Series="{Binding ViewModel.Series}"
+   
+                    ></lvc:CartesianChart>
+                </Grid>
             </Border>
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
@@ -235,7 +242,7 @@
                             <Border Padding="5,5" CornerRadius="25" Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}" BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"  BorderThickness="1">
                                 <StackPanel>
                                     <TextBlock Text="{Binding Date }" HorizontalAlignment="Center"></TextBlock>
-                                    <svgc:SvgViewbox Source="{Binding Image}" Width="70" Height="70" Margin="45,15"></svgc:SvgViewbox>
+                                    <svgc:SvgViewbox Source="{Binding Image}" Width="50" Height="50" Margin="45,15"></svgc:SvgViewbox>
                                     <TextBlock Text="{Binding MaxTemp}" HorizontalAlignment="Center"></TextBlock>
                                     <TextBlock Text="{Binding MinTemp}" HorizontalAlignment="Center" Margin="0,10,0,0"></TextBlock>
                                 </StackPanel>
