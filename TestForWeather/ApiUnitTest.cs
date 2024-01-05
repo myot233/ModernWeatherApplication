@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Hosting;
+using ModernWeatherApplication;
 using ModernWeatherApplication.Service;
 
 namespace TestForWeather
@@ -6,10 +8,9 @@ namespace TestForWeather
     public class ApiUnitTest
     {
         [TestMethod]
-        
         public void TestFetchWeatherDataSevenDay()
         {
-            ApiService service = new ApiService(null,new LoggerService());
+            ApiService service = new ApiService(null);
             var resultTask =  service.FetchWeatherDataSevenDay(101210106);
             var result = resultTask.GetAwaiter().GetResult();
             Console.WriteLine(result);
@@ -20,7 +21,7 @@ namespace TestForWeather
 
         public void TestFetchWeatherDataPerHour()
         {
-            ApiService service = new ApiService(null, new LoggerService());
+            ApiService service = new ApiService(null);
             var resultTask = service.FetchWeatherDataPerHour(101210106);
             var result = resultTask.GetAwaiter().GetResult();
             Console.WriteLine(result);
@@ -31,7 +32,7 @@ namespace TestForWeather
 
         public void TestFetchAirPollutionNow()
         {
-            ApiService service = new ApiService(null, new LoggerService());
+            ApiService service = new ApiService(null);
             var resultTask = service.FetchAirPollutionNow(101210106);
             var result = resultTask.GetAwaiter().GetResult();
             Console.WriteLine(result);
@@ -40,7 +41,7 @@ namespace TestForWeather
         [TestMethod]
         public void TestFetchWeatherIndex()
         {
-            ApiService service = new ApiService(null, new LoggerService());
+            ApiService service = new ApiService(null);
             var resultTask = service.FetchWeatherIndex(101210106);
             var result = resultTask.GetAwaiter().GetResult();
             Console.WriteLine(result);

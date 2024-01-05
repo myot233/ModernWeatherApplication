@@ -17,7 +17,6 @@
 
   <ItemGroup>
     <PackageReference Include="LiveChartsCore.SkiaSharpView.WPF" Version="2.0.0-rc2" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="SharpVectors" Version="1.8.2" />
     <PackageReference Include="SkiaSharp.Extended" Version="2.0.0-preview.86" />
     <PackageReference Include="SkiaSharp.Svg" Version="1.60.0" />

@@ -72,7 +72,7 @@ public partial class WeatherViewModel : ObservableObject,INavigationAware
                 }
                 foreach (var series in Series)
                 {
-                    (series as LineSeries<double>).DataLabelsPaint = new SolidColorPaint(SKColors.DarkGray);
+                    ((series as LineSeries<double>)!).DataLabelsPaint = new SolidColorPaint(SKColors.DarkGray);
                 }
                 break;
             case ApplicationTheme.Dark:
@@ -84,7 +84,7 @@ public partial class WeatherViewModel : ObservableObject,INavigationAware
                 }
                 foreach (var series in Series)
                 {
-                    (series as LineSeries<double>).DataLabelsPaint = new SolidColorPaint(SKColors.LightGray);
+                    ((series as LineSeries<double>)!).DataLabelsPaint = new SolidColorPaint(SKColors.LightGray);
                 }
                 break;
                 
@@ -114,6 +114,7 @@ public partial class WeatherViewModel : ObservableObject,INavigationAware
             catch (HttpRequestException)
             {
                 retryCount--;
+                
             }
 
 

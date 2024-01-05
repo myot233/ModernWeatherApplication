@@ -30,14 +30,19 @@ namespace ModernWeatherApplication
         // https://docs.microsoft.com/dotnet/core/extensions/logging
         private static readonly IHost _host = Host
             .CreateDefaultBuilder()
-            .ConfigureAppConfiguration(c => { c.SetBasePath(Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location)); })
+            
+            .ConfigureAppConfiguration(c =>
+                {
+                    c.SetBasePath(Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location));
+                    c.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                }
+            )
             .ConfigureServices((_, services) =>
             {
                 
                 services.AddSingleton<MainViewModel>();
                 services.AddHostedService<HostService>();
                 services.AddSingleton<ApiService>();
-                services.AddSingleton<LoggerService>();
                 services.AddSingleton<IPageService, PageService>();
                 services.AddSingleton<INavigationService,NavigationService>();
                 services.AddSingleton<ISnackbarService, SnackbarService>();

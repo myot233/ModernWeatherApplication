@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
-using System.Net.Http.Json;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json.Linq;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 using Wpf.Ui.Extensions;
@@ -16,10 +11,10 @@ namespace ModernWeatherApplication.Service
 {
     public class ApiService
     {
-        private ILogger _logger;
-        public ApiService(ISnackbarService service,LoggerService loggerService)
+        private readonly ILogger _logger = App.GetService<ILogger<ApiService>>();
+        public ApiService(ISnackbarService service)
         {
-            _logger = loggerService.CreateLogger(nameof(ApiService));
+            
             _client = new HttpClient(handler);
             snackbarService = service;
             _client.Timeout = TimeSpan.FromSeconds(20);
@@ -39,9 +34,15 @@ namespace ModernWeatherApplication.Service
             AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
         };
 
-        private readonly HttpClient _client;
+        private  HttpClient _client;
 
-        public async Task<List<DayWeatherData>> FetchWeatherDataSevenDay(int location)
+
+        public void Refersh()
+        {
+            _client = new HttpClient(handler);
+        }
+
+        public async Task<List<DayWeatherData>?> FetchWeatherDataSevenDay(int location)
         {
             try
             {
@@ -49,18 +50,17 @@ namespace ModernWeatherApplication.Service
                 var result = await _client
                     .GetAsync($"{SevenDayUrl}?location={location}&key={Key}&lang={Lang}&unit={Unit}")
                     .WaitAsync(TimeSpan.FromSeconds(20));
-                    var jobj = JObject.Parse(await result.Content.ReadAsStringAsync());
-                    if ((jobj["code"] ?? throw new InvalidOperationException("error code")).Value<int>() != 200)
+                var jobj = JsonSerializer.Deserialize<JsonObject>(await result.Content.ReadAsStringAsync());
+                    if ((jobj["code"] ?? throw new InvalidOperationException("error code")).GetValue<string>() != "200")
                     {
                         throw new InvalidOperationException($"operation failed {jobj}");
                     }
                     _logger.LogInformation(jobj.ToString());
-                    return jobj["daily"]!.Children().ToList().Select((x) =>
-                        x.ToObject<DayWeatherData>()!).ToList();
-                
+                    return jobj["daily"]!.Deserialize<List<DayWeatherData>>();
             }
             catch (HttpRequestException exception)
             {
+                _logger.LogError(exception.StackTrace);
                 snackbarService.Show("错误",exception.Message, ControlAppearance.Caution, timeout: TimeSpan.FromSeconds(10));
                 throw;
 
@@ -69,63 +69,70 @@ namespace ModernWeatherApplication.Service
 
         
 
-        public async Task<List<HourWeatherData>> FetchWeatherDataPerHour(int location)
+        public async Task<List<HourWeatherData>?> FetchWeatherDataPerHour(int location)
         {
             try{
                 var result = await _client.GetAsync($"{PerHourUrl}?location={location}&key={Key}&lang={Lang}&unit={Unit}");
-                var jobj = JObject.Parse(await result.Content.ReadAsStringAsync());
-                if ((jobj["code"] ?? throw new InvalidOperationException("error code")).Value<int>() != 200)
+                var jobj = JsonSerializer.Deserialize<JsonObject>(await result.Content.ReadAsStringAsync());
+                if ((jobj["code"] ?? throw new InvalidOperationException("error code")).GetValue<string>() != "200")
                 {
                     throw new InvalidOperationException($"operation failed {jobj}");
                 }
                 _logger.LogInformation(jobj.ToString());
-                return jobj["hourly"]!.Children().ToList().Select((x) =>
-                    x.ToObject<HourWeatherData>()!).ToList();
+                return jobj["hourly"]!.Deserialize<List<HourWeatherData>>();
             }
             catch (HttpRequestException exception)
             {
+                _logger.LogError(exception.Message);
+                _logger.LogError(exception.InnerException?.Message);
+                _logger.LogError(exception.StackTrace);
                 snackbarService.Show("错误", exception.Message, ControlAppearance.Caution,timeout:TimeSpan.FromSeconds(10));
                 throw;
 
             }
         }
 
-        public async Task<List<WeatherIndex>> FetchWeatherIndex(int location)
+        public async Task<List<WeatherIndex>?> FetchWeatherIndex(int location)
         {
             try
             {
                 var result = await _client.GetAsync($"{WeatherIndexUrl}?location={location}&key={Key}&type=0");
-                var jobj = JObject.Parse(await result.Content.ReadAsStringAsync());
-                if ((jobj["code"] ?? throw new InvalidOperationException("error code")).Value<int>() != 200)
+                var jobj = JsonSerializer.Deserialize<JsonObject>(await result.Content.ReadAsStringAsync());
+                if ((jobj["code"] ?? throw new InvalidOperationException("error code")).GetValue<string>() != "200")
                 {
                     throw new InvalidOperationException($"operation failed {jobj}");
                 }
                 _logger.LogInformation(jobj.ToString());
-                return jobj["daily"]!.Children().ToList().Select((x) =>
-                    x.ToObject<WeatherIndex>()!).ToList();
+                return jobj["daily"]!.Deserialize<List<WeatherIndex>>();
             }
             catch (HttpRequestException exception)
             {
+                _logger.LogError(exception.Message);
+                _logger.LogError(exception.InnerException?.Message);
+                _logger.LogError(exception.StackTrace);
                 snackbarService.Show("错误", exception.Message, ControlAppearance.Caution, timeout: TimeSpan.FromSeconds(10));
                 throw;
 
             }
         }
 
-        public async Task<AirPollution> FetchAirPollutionNow(int location)
+        public async Task<AirPollution?> FetchAirPollutionNow(int location)
         {
             try{
                 var result = await _client.GetAsync($"{AirPollutionUrl}?location={location}&key={Key}&lang={Lang}");
-                var jobj = JObject.Parse(await result.Content.ReadAsStringAsync());
-                if ((jobj["code"] ?? throw new InvalidOperationException("error code")).Value<int>() != 200)
+                var jobj = JsonSerializer.Deserialize<JsonObject>(await result.Content.ReadAsStringAsync());
+                if ((jobj["code"] ?? throw new InvalidOperationException("error code")).GetValue<string>() != "200")
                 {
                     throw new InvalidOperationException($"operation failed {jobj}");
                 }
                 _logger.LogInformation(jobj.ToString());
-                return jobj["now"]!.ToObject<AirPollution>()!;
+                return jobj["now"]!.Deserialize<AirPollution>();
             }
             catch (HttpRequestException exception)
             {
+                _logger.LogError(exception.Message);
+                _logger.LogError(exception.InnerException?.Message);
+                _logger.LogError(exception.StackTrace);
                 snackbarService.Show("错误", exception.Message,ControlAppearance.Caution, timeout: TimeSpan.FromSeconds(10));
                 throw;
 

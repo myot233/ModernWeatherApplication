@@ -99,7 +99,7 @@
                         <RowDefinition></RowDefinition>
                         
                     </Grid.RowDefinitions>
-                    <ui:ProgressRing Grid.Row="0" IsIndeterminate="True" Visibility="{Binding ViewModel.LoadingVisibility}"></ui:ProgressRing>
+                    <ui:ProgressRing MinHeight="50" MinWidth="50" Grid.Row="0" IsIndeterminate="True" Visibility="{Binding ViewModel.LoadingVisibility}"></ui:ProgressRing>
                     <lvc:CartesianChart Grid.Row="0"
                         Visibility="{Binding ViewModel.LstVisibility}"
                         XAxes="{Binding ViewModel.XAxes}"

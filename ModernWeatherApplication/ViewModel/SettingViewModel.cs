@@ -1,19 +1,15 @@
-﻿using System.Collections.ObjectModel;
-using System.Drawing;
+﻿using System.Text.Json;
+using System.Text.Json.Nodes;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Newtonsoft.Json.Linq;
-
 using ModernWeatherApplication.Properties;
 using Wpf.Ui.Controls;
-using System.Windows;
 using System.Windows.Controls;
-using ModernWeatherApplication.Service;
 using Wpf.Ui.Appearance;
 namespace ModernWeatherApplication.ViewModel
 {
     public partial class SettingViewModel: ObservableObject, INavigationAware
     {
-        public int Location => _jroot[FirstSelected]![SecondSelected]![LastSelected]!.Value<int>();
+        public int Location => int.Parse(_jroot[FirstSelected]![SecondSelected]![LastSelected]!.GetValue<string>());
 
         public event Action onLocationChanged;
 
@@ -28,12 +24,12 @@ namespace ModernWeatherApplication.ViewModel
         
         
 
-        private readonly JObject _jroot = JObject.Parse(System.Text.Encoding.UTF8.GetString(Resources.location));
+        private readonly JsonObject _jroot =  JsonSerializer.Deserialize<JsonObject>(System.Text.Encoding.UTF8.GetString(Resources.location));
         public SettingViewModel()
         {
             CurrentApplicationTheme = ApplicationThemeManager.GetAppTheme();
             onLocationChanged += () => { };
-            FirstPlace = _jroot.Properties().Select(x=>x.Name).ToList();
+            FirstPlace = _jroot.Select(x => x.Key).ToList();
             FirstSelected = FirstPlace[0];
 
         }
@@ -45,7 +41,7 @@ namespace ModernWeatherApplication.ViewModel
         public void OnFirstSelected(object sender, SelectionChangedEventArgs selectionChangedEventArgs)
 
         {
-            SecondPlace = (_jroot[FirstSelected] as JObject)?.Properties().Select(x => x.Name).ToList() ?? new List<string>();
+            SecondPlace = (_jroot[FirstSelected] as JsonObject)?.Select(x => x.Key).ToList() ?? new List<string>();
             SecondSelected = SecondPlace[0];
             
 
@@ -55,8 +51,8 @@ namespace ModernWeatherApplication.ViewModel
         public void OnSecondSelected(object sender, SelectionChangedEventArgs selectionChangedEventArgs)
         {
             if (!_jroot.ContainsKey(FirstSelected)) return;
-            if (!(_jroot[FirstSelected] as JObject)!.ContainsKey(SecondSelected ?? "")) return;
-            LastPlace = (_jroot[FirstSelected]?[SecondSelected] as JObject)?.Properties().Select(x => x.Name)
+            if (!(_jroot[FirstSelected] as JsonObject)!.ContainsKey(SecondSelected ?? "")) return;
+            LastPlace = (_jroot[FirstSelected]?[SecondSelected] as JsonObject)?.Select(x => x.Key)
                 .ToList() ?? new List<string>();
             LastSelected = LastPlace[0];
             
@@ -65,8 +61,8 @@ namespace ModernWeatherApplication.ViewModel
         public void OnLastSeleceted(object sender, SelectionChangedEventArgs selectionChangedEventArgs)
         {
             if (!_jroot.ContainsKey(FirstSelected)) return;
-            if (!(_jroot[FirstSelected] as JObject)!.ContainsKey(SecondSelected ?? "")) return;
-            if (SecondSelected != null && !(_jroot[FirstSelected]?[SecondSelected] as JObject)!.ContainsKey(LastSelected ?? "")) return;
+            if (!(_jroot[FirstSelected] as JsonObject)!.ContainsKey(SecondSelected ?? "")) return;
+            if (SecondSelected != null && !(_jroot[FirstSelected]?[SecondSelected] as JsonObject)!.ContainsKey(LastSelected ?? "")) return;
             onLocationChanged();
         }
 
