@@ -18,29 +18,17 @@ namespace ModernWeatherApplication.ViewModel;
 
 public partial class WeatherViewModel : ObservableObject,INavigationAware
 {
-    [ObservableProperty]
-    private ObservableCollection<WeatherModel> _items = new();
-
-    [ObservableProperty] 
-    private WeatherModel _selected;
-
-    [ObservableProperty] 
-    private Visibility _lstVisibility;
-
-    [ObservableProperty] 
-    private Visibility _loadingVisibility;
-
-    [ObservableProperty] private ISeries[] _series;
-
-    [ObservableProperty] private Axis[] _xAxes;
-
-    [ObservableProperty] private Axis[] _yAxes;
-
-    [ObservableProperty] private IEnumerable<ISeries> _pieSeries;
-    [ObservableProperty] private WeatherIndexModel _selectedIndex;
-
+    [ObservableProperty] private ObservableCollection<WeatherModel> _items = new();
+    [ObservableProperty] private WeatherModel _selected = null!;
+    [ObservableProperty] private Visibility _lstVisibility;
+    [ObservableProperty] private Visibility _loadingVisibility;
+    [ObservableProperty] private ISeries[] _series = null!;
+    [ObservableProperty] private Axis[] _xAxes = null!;
+    [ObservableProperty] private Axis[] _yAxes = null!;
+    [ObservableProperty] private IEnumerable<ISeries> _pieSeries = null!;
+    [ObservableProperty] private WeatherIndexModel _selectedIndex = null!;
     [ObservableProperty] ObservableCollection<WeatherIndexModel> _indexSeries = new();
-    [ObservableProperty] private SolidColorPaint _legendTextPaint;
+    [ObservableProperty] private SolidColorPaint _legendTextPaint = null!;
 
     public WeatherViewModel(ApiService service, SettingViewModel viewModel)
     {
@@ -100,9 +88,11 @@ public partial class WeatherViewModel : ObservableObject,INavigationAware
         {
             try
             {
-               /* await Init24HourItem(service,viewModel);
+               /*
+                await Init24HourItem(service,viewModel);
                 await InitSevenDayItem(service,viewModel);
-                await InitWeatherIndex(service, viewModel); */
+                await InitWeatherIndex(service, viewModel); 
+               */
                await Task.WhenAll(
                    Init24HourItem(service, viewModel), 
                    InitSevenDayItem(service, viewModel),
@@ -114,7 +104,7 @@ public partial class WeatherViewModel : ObservableObject,INavigationAware
             catch (HttpRequestException)
             {
                 retryCount--;
-                
+                service.Refersh();
             }
 
 

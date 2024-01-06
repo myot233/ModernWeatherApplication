@@ -42,7 +42,7 @@
             </ui:CardControl.Header>
             <ComboBox
                       MinWidth="200"
-                      SelectedIndex="{Binding ViewModel.CurrentApplicationTheme, Converter={StaticResource ThemeToIndexConverter}, Mode=TwoWay}">
+                      SelectedIndex="{Binding ViewModel.Setting.Theme, Converter={StaticResource ThemeToIndexConverter}, Mode=TwoWay}">
                 <ComboBoxItem Content="明亮" />
                 <ComboBoxItem Content="暗黑" />
                 <ComboBoxItem Content="高对比" />
@@ -71,7 +71,7 @@
                     Margin="15,0"
                     Width="125"
                     ItemsSource="{Binding ViewModel.FirstPlace}"
-                    SelectedItem="{Binding ViewModel.FirstSelected}"
+                    SelectedItem="{Binding ViewModel.Setting.Province}"
                     SelectionChanged="Selector_OnSelected"
                 >
                 </ComboBox>
@@ -80,7 +80,7 @@
                     Margin="15,0"
                     Width="125"
                     ItemsSource="{Binding ViewModel.SecondPlace}"
-                    SelectedItem="{Binding ViewModel.SecondSelected}"
+                    SelectedItem="{Binding ViewModel.Setting.City}"
                     SelectionChanged="Selector1_OnSelected"
                 ></ComboBox>
                 <TextBlock Text="->" VerticalAlignment="Center"></TextBlock>
@@ -88,7 +88,7 @@
                     Margin="15,0"
                     Width="125"
                     ItemsSource="{Binding ViewModel.LastPlace}"
-                    SelectedItem="{Binding ViewModel.LastSelected}"
+                    SelectedItem="{Binding ViewModel.Setting.Region}"
                     SelectionChanged="Selector_OnSelectionChanged"
                 ></ComboBox>
             </StackPanel>

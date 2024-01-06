@@ -7,29 +7,33 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using ModernWeatherApplication.Model;
 using Wpf.Ui;
+using Wpf.Ui.Appearance;
 
 namespace ModernWeatherApplication.Service
 {
     public class HostService : IHostedService
     {
         private readonly IServiceProvider _serviceProvider;
-        private INavigationWindow _navigationWindow;
-        
-        public HostService(IServiceProvider serviceProvider)
+        private INavigationWindow _navigationWindow = null!;
+        private readonly Setting _setting;
+        public HostService(IServiceProvider serviceProvider,Setting setting)
         {
-            
+            _setting = setting;
             _serviceProvider = serviceProvider;
         }
         public async Task StartAsync(CancellationToken cancellationToken)
         {
 
             await HandleActivationAsync();
+            ApplicationThemeManager.Apply(_setting.Theme);
             
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
+            _setting.SaveToFile();
             return Task.CompletedTask;
         }
         private async Task HandleActivationAsync()
@@ -42,8 +46,6 @@ namespace ModernWeatherApplication.Service
                     _serviceProvider.GetService(typeof(INavigationWindow)) as INavigationWindow
                 )!;
                 _navigationWindow.ShowWindow();
-
-                //_navigationWindow.Navigate(typeof(MainViewPage));
             }
 
             await Task.CompletedTask;

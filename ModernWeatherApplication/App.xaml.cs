@@ -12,8 +12,10 @@ using System.IO;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Threading;
+using ModernWeatherApplication.Model;
 using ModernWeatherApplication.ViewModel;
 using Wpf.Ui;
+using Wpf.Ui.Appearance;
 using Wpf.Ui.Demo.Mvvm.Services;
 
 namespace ModernWeatherApplication
@@ -33,7 +35,7 @@ namespace ModernWeatherApplication
             
             .ConfigureAppConfiguration(c =>
                 {
-                    c.SetBasePath(Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location));
+                    c.SetBasePath(Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location)!);
                     c.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
                 }
             )
@@ -48,6 +50,14 @@ namespace ModernWeatherApplication
                 services.AddSingleton<ISnackbarService, SnackbarService>();
                 services.AddSingleton<IContentDialogService, ContentDialogService>();
                 services.AddSingleton<INavigationWindow,FluentMainWindow>();
+                services.AddSingleton(_ => Setting.LoadFromFIleOrDefault(
+                    new Setting(
+                        "北京市",
+                        "北京市",
+                        "北京",
+                        ApplicationTheme.Unknown
+                    )
+                    ));
                 services.AddSingleton<SettingViewModel>();
                 services.AddSingleton<SettingViewPage>();
                 services.AddSingleton<WeatherViewModel>();
