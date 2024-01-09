@@ -32,6 +32,10 @@ namespace ModernWeatherApplication.Model
             301 => "pack://application:,,,/Resources/shower.svg",
             > 302 and < 305 => "pack://application:,,,/Resources/thunder_shower.svg",
             305 => "pack://application:,,,/Resources/rain_small.svg",
+            > 305 and < 400 => "pack://application:,,,/Resources/shower.svg",
+            400 => "pack://application:,,,/Resources/small_snow.svg",
+            401 => "pack://application:,,,/Resources/middle_snow.svg",
+            402 => "pack://application:,,,/Resources/big_snow.svg",
             _ => "pack://application:,,,/Resources/sunny.svg"
         });
 

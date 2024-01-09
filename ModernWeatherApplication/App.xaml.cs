@@ -17,6 +17,7 @@ using ModernWeatherApplication.ViewModel;
 using Wpf.Ui;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Demo.Mvvm.Services;
+using MainViewPageModel = ModernWeatherApplication.Model.MainViewPageModel;
 
 namespace ModernWeatherApplication
 {

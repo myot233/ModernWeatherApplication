@@ -2,7 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using Wpf.Ui.Controls;
 
-namespace ModernWeatherApplication.Views;
+namespace ModernWeatherApplication.Model;
 
 public partial class MainViewPageModel : ObservableObject, INavigationAware
 {

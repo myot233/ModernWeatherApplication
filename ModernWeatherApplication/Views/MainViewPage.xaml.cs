@@ -21,10 +21,10 @@ namespace ModernWeatherApplication.Views
     /// <summary>
     /// MainViewPage.xaml 的交互逻辑
     /// </summary>
-    public partial class MainViewPage : INavigableView<MainViewPageModel>
+    public partial class MainViewPage : INavigableView<Model.MainViewPageModel>
     {
         
-        public MainViewPage(MainViewPageModel viewModel)
+        public MainViewPage(Model.MainViewPageModel viewModel)
         {
             
             ViewModel = viewModel;
@@ -32,7 +32,7 @@ namespace ModernWeatherApplication.Views
             InitializeComponent();
         }
 
-        public MainViewPageModel ViewModel { get; set; }
+        public Model.MainViewPageModel ViewModel { get; set; }
 
         
     }

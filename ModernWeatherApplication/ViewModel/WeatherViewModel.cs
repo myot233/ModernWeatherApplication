@@ -29,12 +29,13 @@ public partial class WeatherViewModel : ObservableObject,INavigationAware
     [ObservableProperty] private WeatherIndexModel _selectedIndex = null!;
     [ObservableProperty] ObservableCollection<WeatherIndexModel> _indexSeries = new();
     [ObservableProperty] private SolidColorPaint _legendTextPaint = null!;
-
-    public WeatherViewModel(ApiService service, SettingViewModel viewModel)
+    [ObservableProperty] private Setting _setting;
+    public WeatherViewModel(ApiService service, SettingViewModel viewModel,Setting setting)
     {
 
         LstVisibility = Visibility.Hidden;
         LoadingVisibility = Visibility.Visible;
+        Setting = setting;
         LiveCharts.Configure(config => config.HasGlobalSKTypeface(SKFontManager.Default.MatchCharacter('汉')));
         viewModel.onLocationChanged += async () =>
         {
@@ -119,7 +120,10 @@ public partial class WeatherViewModel : ObservableObject,INavigationAware
         {
             IndexSeries.Add(weatherIndexModel);
         }
+
+        SelectedIndex = IndexSeries[0];
         
+
 
     }
 
