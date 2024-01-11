@@ -1,0 +1,97 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0-windows7.0</TargetFramework>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>a2xjr-3grc1-001.ico</ApplicationIcon>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <StartupObject></StartupObject>
+    <Platforms>AnyCPU;x64</Platforms>
+    <AssemblyName>WeatherApp</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="a2xjr-3grc1-001.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="LiveChartsCore.SkiaSharpView.WPF" Version="2.0.0-rc2" />
+    <PackageReference Include="SharpVectors" Version="1.8.2" />
+    <PackageReference Include="SkiaSharp.Extended" Version="2.0.0-preview.86" />
+    <PackageReference Include="SkiaSharp.Svg" Version="1.60.0" />
+    <PackageReference Include="WPF-UI" Version="3.0.0-preview.13" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\wpfui-icon-256.png" />
+    <None Remove="Assets\wpfui-icon-1024.png" />
+    <None Remove="Resources\big_snow.svg" />
+    <None Remove="Resources\cloudy.svg" />
+    <None Remove="Resources\humandity.svg" />
+    <None Remove="Resources\main.png" />
+    <None Remove="Resources\middle_snow.svg" />
+    <None Remove="Resources\overcast.svg" />
+    <None Remove="Resources\pm2.5.svg" />
+    <None Remove="Resources\pressure.svg" />
+    <None Remove="Resources\rain_small.svg" />
+    <None Remove="Resources\shower.svg" />
+    <None Remove="Resources\small_snow.svg" />
+    <None Remove="Resources\sunny.svg" />
+    <None Remove="Resources\sunrise.svg" />
+    <None Remove="Resources\sunset.svg" />
+    <None Remove="Resources\thunder_shower.svg" />
+    <None Remove="Resources\visibility.svg" />
+    <None Remove="Resources\wet.svg" />
+    <None Remove="Resources\wind_direction.svg" />
+    <None Remove="Resources\wind_speed.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\wpfui-icon-256.png" />
+    <Resource Include="Assets\wpfui-icon-1024.png" />
+    <Resource Include="Resources\big_snow.svg" />
+    <Resource Include="Resources\cloudy.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\humandity.svg" />
+    <Resource Include="Resources\main.png" />
+    <Resource Include="Resources\middle_snow.svg" />
+    <Resource Include="Resources\overcast.svg" />
+    <Resource Include="Resources\pm2.5.svg" />
+    <Resource Include="Resources\pressure.svg" />
+    <Resource Include="Resources\rain_small.svg" />
+    <Resource Include="Resources\shower.svg" />
+    <Resource Include="Resources\small_snow.svg" />
+    <Resource Include="Resources\sunny.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\sunrise.svg" />
+    <Resource Include="Resources\sunset.svg" />
+    <Resource Include="Resources\thunder_shower.svg" />
+    <Resource Include="Resources\visibility.svg" />
+    <Resource Include="Resources\wet.svg" />
+    <Resource Include="Resources\wind_direction.svg" />
+    <Resource Include="Resources\wind_speed.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>

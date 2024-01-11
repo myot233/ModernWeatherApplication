@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0-windows7.0</TargetFramework>
+    <TargetFramework>net8.0-windows7.0</TargetFramework>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>wpfui-icon.ico</ApplicationIcon>
     <Nullable>enable</Nullable>
@@ -20,7 +20,6 @@
     <PackageReference Include="SharpVectors" Version="1.8.2" />
     <PackageReference Include="SkiaSharp.Extended" Version="2.0.0-preview.86" />
     <PackageReference Include="SkiaSharp.Svg" Version="1.60.0" />
-    <PackageReference Include="WPF-UI" Version="3.0.0-preview.13" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
   </ItemGroup>
@@ -47,6 +46,10 @@
     <None Remove="Resources\wet.svg" />
     <None Remove="Resources\wind_direction.svg" />
     <None Remove="Resources\wind_speed.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Wpf.Ui\Wpf.Ui.csproj" />
   </ItemGroup>
 
   <ItemGroup>
