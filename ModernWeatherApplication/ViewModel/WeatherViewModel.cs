@@ -30,6 +30,7 @@ public partial class WeatherViewModel : ObservableObject,INavigationAware
     [ObservableProperty] ObservableCollection<WeatherIndexModel> _indexSeries = new();
     [ObservableProperty] private SolidColorPaint _legendTextPaint = null!;
     [ObservableProperty] private Setting _setting;
+    [ObservableProperty] private AirPollution airPollution;
     public WeatherViewModel(ApiService service, SettingViewModel viewModel,Setting setting)
     {
 
@@ -46,7 +47,8 @@ public partial class WeatherViewModel : ObservableObject,INavigationAware
         };
         ApplicationThemeManager.Changed += (sender, _) => { ChangeControlsByTheme(sender); };
 
-        InitAllAsync(service, viewModel);
+        var t  = InitAllAsync(service, viewModel);
+        
     }
 
     private void ChangeControlsByTheme(ApplicationTheme sender)
@@ -80,6 +82,11 @@ public partial class WeatherViewModel : ObservableObject,INavigationAware
         }
     }
 
+    public async Task InitAirPollution(ApiService service, SettingViewModel viewModel)
+    {
+        AirPollution = await service.FetchAirPollutionNow(viewModel.Location);
+    }
+
     public async Task InitAllAsync(ApiService service, SettingViewModel viewModel)
     {
         
@@ -96,6 +103,7 @@ public partial class WeatherViewModel : ObservableObject,INavigationAware
                */
                await Task.WhenAll(
                    Init24HourItem(service, viewModel), 
+                   InitAirPollution(service,viewModel),
                    InitSevenDayItem(service, viewModel),
                    InitWeatherIndex(service, viewModel)
                    );

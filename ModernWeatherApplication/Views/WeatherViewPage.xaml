@@ -16,29 +16,35 @@
     ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
     mc:Ignorable="d">
-
-    <ScrollViewer VerticalScrollBarVisibility="Hidden">
-        <Grid>
-            <Grid.Resources>
-                <Style TargetType="Border">
-                    <Setter Property="Background" Value="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}" />
-                    <Setter Property="BorderBrush" Value="{ui:ThemeResource CardStrokeColorDefaultBrush}" />
-                </Style>
-            </Grid.Resources>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1*" />
-                <RowDefinition Height="3*" />
-                <RowDefinition Height="3*" />
-                <RowDefinition Height="1*" />
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="3">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <Border
+    <Grid>
+        <ui:ProgressRing
+    Grid.Row="0"
+    MinWidth="50"
+    MinHeight="50"
+    IsIndeterminate="True"
+    Visibility="{Binding ViewModel.LoadingVisibility}" />
+        <ScrollViewer VerticalScrollBarVisibility="Hidden">
+            <Grid>
+                <Grid.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="Background" Value="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}" />
+                        <Setter Property="BorderBrush" Value="{ui:ThemeResource CardStrokeColorDefaultBrush}" />
+                    </Style>
+                </Grid.Resources>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="3*" />
+                    <RowDefinition Height="3*" />
+                    <RowDefinition Height="1*" />
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Border
                     Grid.Column="1"
                     Margin="15,15"
                     Padding="25"
@@ -46,11 +52,57 @@
                     BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
                     BorderThickness="1"
                     CornerRadius="25"
-                    Visibility="{Binding ViewModel.LstVisibility}">
-                    <TextBlock Text="{Binding ViewModel.SelectedIndex.Detail}" />
-                </Border>
-                <!--  天气指数  -->
-                <Border
+                    Visibility="{Binding ViewModel.LstVisibility}"
+                        >
+                        <StackPanel>
+                            <TextBlock Text="tips: "></TextBlock>
+                            <TextBlock Margin="0,5,0,10" TextWrapping="WrapWithOverflow" Width="520" Text="{Binding ViewModel.SelectedIndex.Detail}" />
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <UniformGrid Rows="2" Columns="2">
+                                    <Border
+                            BorderThickness="0,0,1,1"
+>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                                            <svgc:SvgViewbox Width="55" Height="75" Source="pack://application:,,,/Resources/pm2.5.svg"></svgc:SvgViewbox>
+                                            <TextBlock FontSize="25" Margin="10,0" VerticalAlignment="Center" Text="{Binding ViewModel.AirPollution.pm2p5}"></TextBlock>
+                                        </StackPanel>
+                                    </Border>
+                                    <Border
+                                BorderThickness="1,0,0,1"
+                                >
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                                            <svgc:SvgViewbox Width="75" Height="75" Source="pack://application:,,,/Resources/pm10.svg"></svgc:SvgViewbox>
+                                            <TextBlock FontSize="25" Margin="10,0" VerticalAlignment="Center" Text="{Binding ViewModel.AirPollution.pm10}"></TextBlock>
+                                        </StackPanel>
+                                    </Border>
+                                    <Border
+BorderThickness="0,1,1,0"
+>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                                            <svgc:SvgViewbox Width="75" Height="75" Source="pack://application:,,,/Resources/co1.svg"></svgc:SvgViewbox>
+                                            <TextBlock FontSize="25" Margin="10,0"  VerticalAlignment="Center" Text="{Binding ViewModel.AirPollution.co}"></TextBlock>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <Border
+                                BorderThickness="1,1,0,0"
+                                >
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                                            <svgc:SvgViewbox Width="75" Height="75"  Source="pack://application:,,,/Resources/o3.svg"></svgc:SvgViewbox>
+                                            <TextBlock FontSize="25" Margin="10,0"  VerticalAlignment="Center" Text="{Binding ViewModel.AirPollution.o3}"></TextBlock>
+                                        </StackPanel>
+                                    </Border>
+                                </UniformGrid>
+                            </Grid>
+                            
+                            </StackPanel>
+                    </Border>
+                    <!--  天气指数  -->
+                    <Border
                     Grid.Column="0"
                     Margin="15,15"
                     Padding="25"
@@ -60,236 +112,231 @@
                     CornerRadius="25"
                     Visibility="{Binding ViewModel.LstVisibility}">
 
-                    <ListView
+                        <ListView
                         MinWidth="250"
                         MaxHeight="170"
                         ItemsSource="{Binding ViewModel.IndexSeries}"
                         SelectedItem="{Binding ViewModel.SelectedIndex}"
                         SelectionMode="Single">
-                        <ListView.ItemTemplate>
-                            <DataTemplate DataType="{x:Type model:WeatherIndexModel}">
-                                <WrapPanel>
-                                    <StackPanel Margin="0,0,15,0" Orientation="Vertical">
-                                        <TextBlock Margin="5,0,0,0" Text="{Binding Name, Mode=OneWay}" />
-                                        <StackPanel Orientation="Horizontal">
-                                            <ProgressBar
+                            <ListView.ItemTemplate>
+                                <DataTemplate DataType="{x:Type model:WeatherIndexModel}">
+                                    <WrapPanel>
+                                        <StackPanel Margin="0,0,15,0" Orientation="Vertical">
+                                            <TextBlock Margin="5,0,0,0" Text="{Binding Name, Mode=OneWay}" />
+                                            <StackPanel Orientation="Horizontal">
+                                                <ProgressBar
                                                 Width="200"
                                                 Margin="5,0,0,0"
                                                 Value="{Binding Value, Mode=OneWay}" />
-                                            <Ellipse
+                                                <Ellipse
                                                 Width="13"
                                                 Height="13"
                                                 Margin="5,0,0,0"
                                                 Fill="{Binding Color}" />
+                                            </StackPanel>
                                         </StackPanel>
-                                    </StackPanel>
-                                </WrapPanel>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </Border>
-            </Grid>
-            <!--  24h天气图表  -->
-            <Border
+                                    </WrapPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Border>
+                </Grid>
+                <!--  24h天气图表  -->
+                <Border
                 Grid.Row="2"
                 MinHeight="200"
                 Margin="15,15"
                 BorderThickness="1"
                 CornerRadius="25"
                 Visibility="{Binding ViewModel.LstVisibility}">
-                <Grid>
-                    <ui:ProgressRing
-                        Grid.Row="0"
-                        MinWidth="50"
-                        MinHeight="50"
-                        IsIndeterminate="True"
-                        Visibility="{Binding ViewModel.LoadingVisibility}" />
-                    <lvc:CartesianChart
+                    <Grid>
+
+                        <lvc:CartesianChart
                         Grid.Row="0"
                         Series="{Binding ViewModel.Series}"
                         Visibility="{Binding ViewModel.LstVisibility}"
                         XAxes="{Binding ViewModel.XAxes}"
                         YAxes="{Binding ViewModel.YAxes}" />
-                </Grid>
-            </Border>
-            <Grid Grid.Row="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <Border
+                    </Grid>
+                </Border>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Border
                     Grid.Column="0"
                     Margin="10,15"
                     Padding="25,25"
                     BorderThickness="1"
                     CornerRadius="25"
                     Visibility="{Binding ViewModel.LstVisibility}">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Grid.Resources>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="TextAlignment" Value="Center" />
-                                <Setter Property="Margin" Value="5,10" />
-                                <Setter Property="FontSize" Value="15" />
-                            </Style>
-                        </Grid.Resources>
-                        <StackPanel
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid.Resources>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="TextAlignment" Value="Center" />
+                                    <Setter Property="Margin" Value="5,10" />
+                                    <Setter Property="FontSize" Value="15" />
+                                </Style>
+                            </Grid.Resources>
+                            <StackPanel
                             Grid.Column="0"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center">
-                            <TextBlock FontSize="45" Text="{Binding ViewModel.Selected.MaxTemp}" />
-                            <TextBlock
+                                <TextBlock FontSize="45" Text="{Binding ViewModel.Selected.MaxTemp}" />
+                                <TextBlock
                                 FontSize="35"
                                 FontWeight="ExtraLight"
                                 Foreground="Gray"
                                 Text="{Binding ViewModel.Selected.MinTemp}" />
-                            <StackPanel Orientation="Horizontal">
-                                <svgc:SvgViewbox
+                                <StackPanel Orientation="Horizontal">
+                                    <svgc:SvgViewbox
                                     Width="25"
                                     Height="25"
                                     Source="pack://application:,,,/Resources/wind_speed.svg" />
-                                <TextBlock Text="{Binding ViewModel.Selected.WindSpeedDay}" />
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <svgc:SvgViewbox
+                                    <TextBlock Text="{Binding ViewModel.Selected.WindSpeedDay}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <svgc:SvgViewbox
                                     Width="25"
                                     Height="25"
                                     Source="pack://application:,,,/Resources/wind_direction.svg" />
-                                <TextBlock Text="{Binding ViewModel.Selected.WindDirectionDay}" />
+                                    <TextBlock Text="{Binding ViewModel.Selected.WindDirectionDay}" />
+                                </StackPanel>
                             </StackPanel>
-                        </StackPanel>
-                        <StackPanel
+                            <StackPanel
                             Grid.Column="1"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center">
-                            <svgc:SvgViewbox
+                                <svgc:SvgViewbox
                                 Width="100"
                                 Height="100"
                                 Source="{Binding ViewModel.Selected.Image}" />
-                            <Separator Margin="0,15" />
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <StackPanel
+                                <Separator Margin="0,15" />
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel
                                     Grid.Row="0"
                                     Grid.Column="0"
                                     Orientation="Horizontal">
-                                    <svgc:SvgViewbox
+                                        <svgc:SvgViewbox
                                         Width="25"
                                         Height="25"
                                         Margin="15,0,0,0"
                                         Source="pack://application:,,,/Resources/pressure.svg" />
-                                    <TextBlock Text="{Binding ViewModel.Selected.Pressure}" />
-                                </StackPanel>
-                                <StackPanel
+                                        <TextBlock Text="{Binding ViewModel.Selected.Pressure}" />
+                                    </StackPanel>
+                                    <StackPanel
                                     Grid.Row="0"
                                     Grid.Column="1"
                                     Orientation="Horizontal">
-                                    <svgc:SvgViewbox
+                                        <svgc:SvgViewbox
                                         Width="25"
                                         Height="25"
                                         Margin="25,0,0,0"
                                         Source="pack://application:,,,/Resources/humandity.svg" />
-                                    <TextBlock Text="{Binding ViewModel.Selected.Precip}" />
-                                </StackPanel>
-                                <StackPanel
+                                        <TextBlock Text="{Binding ViewModel.Selected.Precip}" />
+                                    </StackPanel>
+                                    <StackPanel
                                     Grid.Row="1"
                                     Grid.Column="0"
                                     Orientation="Horizontal">
-                                    <svgc:SvgViewbox
+                                        <svgc:SvgViewbox
                                         Width="25"
                                         Height="25"
                                         Margin="15,0,0,0"
                                         Source="pack://application:,,,/Resources/visibility.svg" />
-                                    <TextBlock Text="{Binding ViewModel.Selected.Vis}" />
-                                </StackPanel>
-                                <StackPanel
+                                        <TextBlock Text="{Binding ViewModel.Selected.Vis}" />
+                                    </StackPanel>
+                                    <StackPanel
                                     Grid.Row="1"
                                     Grid.Column="1"
                                     Orientation="Horizontal">
-                                    <svgc:SvgViewbox
+                                        <svgc:SvgViewbox
                                         Width="25"
                                         Height="25"
                                         Margin="25,0,0,0"
                                         Source="pack://application:,,,/Resources/wet.svg" />
-                                    <TextBlock Text="{Binding ViewModel.Selected.Humidity}" />
-                                </StackPanel>
-                            </Grid>
-                        </StackPanel>
-                    </Grid>
-                </Border>
-                <Border
+                                        <TextBlock Text="{Binding ViewModel.Selected.Humidity}" />
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                    <Border
                     Grid.Column="1"
                     Margin="10,15"
                     BorderThickness="1"
                     CornerRadius="25"
                     Visibility="{Binding ViewModel.LstVisibility}">
 
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <StackPanel
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <StackPanel
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             Orientation="Horizontal">
-                            <StackPanel.Resources>
-                                <Style BasedOn="{StaticResource {x:Type Label}}" TargetType="Label">
-                                    <Setter Property="Margin" Value="0,10,15,0" />
-                                    <Setter Property="FontSize" Value="25" />
-                                </Style>
-                            </StackPanel.Resources>
-                            <Label Content="当前位置:" />
-                            <Label Content="{Binding ViewModel.Setting.Province}" FontSize="25" />
-                            <Label Content="{Binding ViewModel.Setting.City}" />
-                            <Label Content="{Binding ViewModel.Setting.Region}" />
-                        </StackPanel>
+                                <StackPanel.Resources>
+                                    <Style BasedOn="{StaticResource {x:Type Label}}" TargetType="Label">
+                                        <Setter Property="Margin" Value="0,10,15,0" />
+                                        <Setter Property="FontSize" Value="25" />
+                                    </Style>
+                                </StackPanel.Resources>
+                                <Label Content="当前位置:" />
+                                <Label Content="{Binding ViewModel.Setting.Province}" FontSize="25" />
+                                <Label Content="{Binding ViewModel.Setting.City}" />
+                                <Label Content="{Binding ViewModel.Setting.Region}" />
+                            </StackPanel>
 
-                        <Grid Grid.Row="1">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <lvc:PieChart
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <lvc:PieChart
                                 LegendPosition="Right"
                                 LegendTextPaint="{Binding ViewModel.LegendTextPaint}"
                                 Series="{Binding ViewModel.Selected.Pie}" />
-                            <StackPanel
+                                <StackPanel
                                 Grid.Column="1"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center">
-                                <StackPanel.Resources>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="Margin" Value="15,5" />
-                                        <Setter Property="FontSize" Value="15" />
-                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                    </Style>
-                                </StackPanel.Resources>
-                                <StackPanel Orientation="Horizontal">
-                                    <svgc:SvgViewbox
+                                    <StackPanel.Resources>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Margin" Value="15,5" />
+                                            <Setter Property="FontSize" Value="15" />
+                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                        </Style>
+                                    </StackPanel.Resources>
+                                    <StackPanel Orientation="Horizontal">
+                                        <svgc:SvgViewbox
                                         Width="35"
                                         Height="35"
                                         Source="pack://application:,,,/Resources/sunrise.svg" />
-                                    <TextBlock Text="{Binding ViewModel.Selected.SunRise}" />
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <svgc:SvgViewbox
+                                        <TextBlock Text="{Binding ViewModel.Selected.SunRise}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <svgc:SvgViewbox
                                         Width="35"
                                         Height="35"
                                         Source="pack://application:,,,/Resources/sunset.svg" />
-                                    <TextBlock Text="{Binding ViewModel.Selected.SunSet}" />
-                                </StackPanel>
-                                <!--<StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding ViewModel.Selected.SunSet}" />
+                                    </StackPanel>
+                                    <!--<StackPanel Orientation="Horizontal">
     <TextBlock Text="月出时间:"></TextBlock>
     <TextBlock Text="{Binding ViewModel.Selected.SunSet}"></TextBlock>
 </StackPanel>
@@ -297,23 +344,22 @@
     <TextBlock Text="月落时间:"></TextBlock>
     <TextBlock Text="{Binding ViewModel.Selected.SunSet}"></TextBlock>
 </StackPanel>-->
-                            </StackPanel>
+                                </StackPanel>
 
+                            </Grid>
                         </Grid>
-                    </Grid>
-                </Border>
-            </Grid>
-            <ui:ProgressRing
-                Grid.Row="1"
-                IsIndeterminate="True"
-                Visibility="{Binding ViewModel.LoadingVisibility}" />
-            <Border
+                    </Border>
+                </Grid>
+
+                <Border
                 Grid.Row="1"
                 Margin="10,0"
                 Padding="5,5"
                 BorderThickness="1"
-                CornerRadius="25">
-                <ListView
+                CornerRadius="25"
+                    Visibility="{Binding ViewModel.LstVisibility}"
+                    >
+                    <ListView
                     VerticalAlignment="Center"
                     Background="WhiteSmoke"
                     Foreground="WhiteSmoke"
@@ -321,39 +367,39 @@
                     SelectedItem="{Binding ViewModel.Selected}"
                     SelectionMode="Single"
                     Visibility="{Binding ViewModel.LstVisibility}">
-                    <ListView.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <UniformGrid Columns="7" />
-                        </ItemsPanelTemplate>
-                    </ListView.ItemsPanel>
-                    <ListView.ItemTemplate>
-                        <DataTemplate DataType="{x:Type model:WeatherModel}">
-                            <DataTemplate.Triggers>
-                                <Trigger />
-                            </DataTemplate.Triggers>
-                            <WrapPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="7" />
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                        <ListView.ItemTemplate>
+                            <DataTemplate DataType="{x:Type model:WeatherModel}">
 
-                                <StackPanel HorizontalAlignment="Center">
-                                    <TextBlock HorizontalAlignment="Center" Text="{Binding Date}" />
-                                    <svgc:SvgViewbox
+                                <WrapPanel HorizontalAlignment="Center" Orientation="Horizontal">
+
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <TextBlock HorizontalAlignment="Center" Text="{Binding Date}" />
+                                        <svgc:SvgViewbox
                                         Width="50"
                                         Height="50"
                                         Margin="45,15"
                                         Source="{Binding Image}" />
-                                    <TextBlock HorizontalAlignment="Center" Text="{Binding MaxTemp}" />
-                                    <TextBlock
+                                        <TextBlock HorizontalAlignment="Center" Text="{Binding MaxTemp}" />
+                                        <TextBlock
                                         Margin="0,10,0,0"
                                         HorizontalAlignment="Center"
                                         Text="{Binding MinTemp}" />
-                                </StackPanel>
+                                    </StackPanel>
 
-                            </WrapPanel>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
+                                </WrapPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
 
-                </ListView>
-            </Border>
-        </Grid>
-    </ScrollViewer>
+                    </ListView>
+                </Border>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+   
 
 </Page>

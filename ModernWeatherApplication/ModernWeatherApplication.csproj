@@ -29,10 +29,14 @@
     <None Remove="Assets\wpfui-icon-1024.png" />
     <None Remove="Resources\big_snow.svg" />
     <None Remove="Resources\cloudy.svg" />
+    <None Remove="Resources\co.svg" />
+    <None Remove="Resources\co1.svg" />
     <None Remove="Resources\humandity.svg" />
     <None Remove="Resources\main.png" />
     <None Remove="Resources\middle_snow.svg" />
+    <None Remove="Resources\o3.svg" />
     <None Remove="Resources\overcast.svg" />
+    <None Remove="Resources\PM10.svg" />
     <None Remove="Resources\pm2.5.svg" />
     <None Remove="Resources\pressure.svg" />
     <None Remove="Resources\rain_small.svg" />
@@ -49,6 +53,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\co1.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\wpfui\src\Wpf.Ui\Wpf.Ui.csproj" />
   </ItemGroup>
 
@@ -59,10 +67,13 @@
     <Resource Include="Resources\cloudy.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resources\co.svg" />
     <Resource Include="Resources\humandity.svg" />
     <Resource Include="Resources\main.png" />
     <Resource Include="Resources\middle_snow.svg" />
+    <Resource Include="Resources\o3.svg" />
     <Resource Include="Resources\overcast.svg" />
+    <Resource Include="Resources\PM10.svg" />
     <Resource Include="Resources\pm2.5.svg" />
     <Resource Include="Resources\pressure.svg" />
     <Resource Include="Resources\rain_small.svg" />
