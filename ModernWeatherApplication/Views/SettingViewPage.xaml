@@ -1,28 +1,33 @@
-﻿<Page x:Class="ModernWeatherApplication.Views.SettingViewPage"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:local="clr-namespace:ModernWeatherApplication.Views"
-      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:utils ="clr-namespace:ModernWeatherApplication.Utils"
-      xmlns:app="clr-namespace:Wpf.Ui.Appearance;assembly=Wpf.Ui"
-      d:DataContext="{d:DesignInstance  local:SettingViewPage }"
-      ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
-      ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-      Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-      
-      mc:Ignorable="d" 
-      Title="SettingViewPage">
+﻿<Page
+    x:Class="ModernWeatherApplication.Views.SettingViewPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="clr-namespace:Wpf.Ui.Appearance;assembly=Wpf.Ui"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:ModernWeatherApplication.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    xmlns:utils="[utils ]clr-namespace:ModernWeatherApplication.Utils"
+    xmlns:utils1="clr-namespace:ModernWeatherApplication.Utils"
+    Title="SettingViewPage"
+    d:DataContext="{d:DesignInstance local:SettingViewPage}"
+    ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+    ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+    mc:Ignorable="d">
     <Page.Resources>
-        <ResourceDictionary >
-            <utils:ThemeToIndexConverter x:Key="ThemeToIndexConverter"></utils:ThemeToIndexConverter>
+        <ResourceDictionary>
+            <utils1:ThemeToIndexConverter x:Key="ThemeToIndexConverter" />
         </ResourceDictionary>
     </Page.Resources>
-        
+
     <StackPanel Margin="15,5,0,5">
-        <ui:TextBlock Appearance="Primary" Text="一般设置" FontTypography="Subtitle" Margin="15"></ui:TextBlock>
-<ui:CardControl Margin="15,0,15,5" Icon="{ui:SymbolIcon Color24}">
+        <ui:TextBlock
+            Margin="15"
+            Appearance="Primary"
+            FontTypography="Subtitle"
+            Text="一般设置" />
+        <ui:CardControl Margin="15,0,15,5" Icon="{ui:SymbolIcon Color24}">
             <ui:CardControl.Header>
                 <Grid>
                     <Grid.RowDefinitions>
@@ -30,72 +35,95 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <ui:TextBlock
-                              Grid.Row="0"
-                              FontTypography="Body"
-                              Text="主题" />
+                        Grid.Row="0"
+                        FontTypography="Body"
+                        Text="主题" />
                     <ui:TextBlock
-                              Grid.Row="1"
-                              Foreground="{ui:ThemeResource  TextFillColorSecondaryBrush}"
-                              Text="选择一个用来展示的主题" />
+                        Grid.Row="1"
+                        Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}"
+                        Text="选择一个用来展示的主题" />
                 </Grid>
 
             </ui:CardControl.Header>
-            <ComboBox
-                      MinWidth="200"
-                      SelectedIndex="{Binding ViewModel.Setting.Theme, Converter={StaticResource ThemeToIndexConverter}, Mode=TwoWay}">
+            <ComboBox MinWidth="200" SelectedIndex="{Binding ViewModel.Setting.Theme, Converter={StaticResource ThemeToIndexConverter}, Mode=TwoWay}">
                 <ComboBoxItem Content="明亮" />
                 <ComboBoxItem Content="暗黑" />
                 <ComboBoxItem Content="高对比" />
             </ComboBox>
         </ui:CardControl>
-              <ui:CardControl Margin="15,0,15,5" Icon="{ui:SymbolIcon Map24}">
-                  <ui:CardControl.Header>
-                      <Grid>
-                          <Grid.RowDefinitions>
-                              <RowDefinition Height="Auto" />
-                              <RowDefinition Height="Auto" />
-                          </Grid.RowDefinitions>
-                          <ui:TextBlock
-                              Grid.Row="0"
-                              FontTypography="Body"
-                              Text="位置" />
-                          <ui:TextBlock
-                              Grid.Row="1"
-                              Foreground="{ui:ThemeResource  TextFillColorSecondaryBrush}"
-                              Text="选择你所在的地方" />
-                      </Grid>
+        <ui:CardControl Margin="15,0,15,5" Icon="{ui:SymbolIcon Map24}">
+            <ui:CardControl.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <ui:TextBlock
+                        Grid.Row="0"
+                        FontTypography="Body"
+                        Text="位置" />
+                    <ui:TextBlock
+                        Grid.Row="1"
+                        Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}"
+                        Text="选择你所在的地方" />
+                </Grid>
 
-                  </ui:CardControl.Header>
-            <StackPanel Orientation="Horizontal" >
+            </ui:CardControl.Header>
+            <StackPanel Orientation="Horizontal">
                 <ComboBox
-                    Margin="15,0"
                     Width="125"
+                    Margin="15,0"
                     ItemsSource="{Binding ViewModel.FirstPlace}"
                     SelectedItem="{Binding ViewModel.Setting.Province}"
-                    SelectionChanged="Selector_OnSelected"
-                >
-                </ComboBox>
-                <TextBlock Text="->" VerticalAlignment="Center"></TextBlock>
+                    SelectionChanged="Selector_OnSelected" />
+                <TextBlock VerticalAlignment="Center" Text="-&gt;" />
                 <ComboBox
-                    Margin="15,0"
                     Width="125"
+                    Margin="15,0"
                     ItemsSource="{Binding ViewModel.SecondPlace}"
                     SelectedItem="{Binding ViewModel.Setting.City}"
-                    SelectionChanged="Selector1_OnSelected"
-                ></ComboBox>
-                <TextBlock Text="->" VerticalAlignment="Center"></TextBlock>
+                    SelectionChanged="Selector1_OnSelected" />
+                <TextBlock VerticalAlignment="Center" Text="-&gt;" />
                 <ComboBox
-                    Margin="15,0"
                     Width="125"
+                    Margin="15,0"
                     ItemsSource="{Binding ViewModel.LastPlace}"
                     SelectedItem="{Binding ViewModel.Setting.Region}"
-                    SelectionChanged="Selector_OnSelectionChanged"
-                ></ComboBox>
+                    SelectionChanged="Selector_OnSelectionChanged" />
             </StackPanel>
         </ui:CardControl>
-        
-            
+        <ui:TextBlock
+            Margin="15"
+            Appearance="Primary"
+            FontTypography="Subtitle"
+            Text="软件介绍" />
+        <ui:CardExpander Margin="15,0,15,5" Icon="{ui:SymbolIcon Pen24}">
+            <ui:CardExpander.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <ui:TextBlock
+                        Grid.Row="0"
+                        FontTypography="Body"
+                        Text="天气软件" />
+                    <ui:TextBlock
+                        Grid.Row="1"
+                        Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}"
+                        Text="一个小巧的软件" />
+                </Grid>
+            </ui:CardExpander.Header>
+            <StackPanel>
+                <Border BorderThickness="0,1">
+                    <Grid>
+                        <Grid.ColumnDefinitions></Grid.ColumnDefinitions>
+                        
+                    </Grid>
+                </Border>
+            </StackPanel>
+        </ui:CardExpander>
 
-        </StackPanel>
+    </StackPanel>
 
 </Page>
