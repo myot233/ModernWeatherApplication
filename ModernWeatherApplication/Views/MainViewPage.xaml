@@ -24,13 +24,13 @@
             Margin="15"
             CornerRadius="25"
             Source="pack://application:,,,/Resources/main.png" />
-        <ui:TextBlock
+        <TextBlock
             Grid.Row="1"
             HorizontalAlignment="Center"
-            FontTypography="Subtitle"
+
             TextWrapping="Wrap">
             一个基于wpfui和livecharts2开发的天气显示软件
-        </ui:TextBlock>
+        </TextBlock>
         <StackPanel
             Grid.Row="3"
             HorizontalAlignment="Center"

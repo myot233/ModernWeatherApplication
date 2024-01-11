@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModernWeatherApplication", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestForWeather", "TestForWeather\TestForWeather.csproj", "{60511C2A-284E-42D5-87BE-88C50FB9A1B8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wpf.Ui", "Wpf.Ui\Wpf.Ui.csproj", "{3D380DAF-7DD7-4CE4-A8D8-9B0073E16DB5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wpf.Ui", "..\wpfui\src\Wpf.Ui\Wpf.Ui.csproj", "{B76874D5-3949-4AD6-9AAD-8D2BE5DF5470}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{60511C2A-284E-42D5-87BE-88C50FB9A1B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{60511C2A-284E-42D5-87BE-88C50FB9A1B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{60511C2A-284E-42D5-87BE-88C50FB9A1B8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3D380DAF-7DD7-4CE4-A8D8-9B0073E16DB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3D380DAF-7DD7-4CE4-A8D8-9B0073E16DB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3D380DAF-7DD7-4CE4-A8D8-9B0073E16DB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3D380DAF-7DD7-4CE4-A8D8-9B0073E16DB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B76874D5-3949-4AD6-9AAD-8D2BE5DF5470}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B76874D5-3949-4AD6-9AAD-8D2BE5DF5470}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B76874D5-3949-4AD6-9AAD-8D2BE5DF5470}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B76874D5-3949-4AD6-9AAD-8D2BE5DF5470}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

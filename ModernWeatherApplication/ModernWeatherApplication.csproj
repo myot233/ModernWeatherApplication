@@ -49,7 +49,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Wpf.Ui\Wpf.Ui.csproj" />
+    <ProjectReference Include="..\..\wpfui\src\Wpf.Ui\Wpf.Ui.csproj" />
   </ItemGroup>
 
   <ItemGroup>
